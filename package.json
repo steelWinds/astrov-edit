@@ -1,0 +1,47 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "test": "vitest --dom",
+    "coverage": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.4.6",
+    "@typescript-eslint/parser": "^5.49.0",
+    "@vueuse/core": "^9.12.0",
+    "element-plus": "^2.2.30",
+    "eslint-config-standard-with-typescript": "^34.0.0",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "pinia": "^2.0.30"
+  },
+  "devDependencies": {
+    "@element-plus/nuxt": "^1.0.3",
+    "@nuxt/eslint-config": "^0.1.1",
+    "@nuxt/test-utils": "^3.2.0",
+    "@nuxtjs/eslint-config-typescript": "^12.0.0",
+    "@types/google.fonts": "^1.0.3",
+    "@typescript-eslint/eslint-plugin": "^5.49.0",
+    "@vicons/fluent": "^0.12.0",
+    "@vicons/material": "^0.12.0",
+    "@vue/test-utils": "^2.2.10",
+    "airbnb": "^0.0.2",
+    "autoprefixer": "^10.4.13",
+    "cypress": "^12.4.1",
+    "eslint": "^8.34.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-vue": "^9.9.0",
+    "happy-dom": "^8.2.6",
+    "nuxt": "npm:nuxt3@latest",
+    "postcss": "^8.4.21",
+    "postcss-lab-function": "^5.1.0",
+    "tailwindcss": "^3.2.6",
+    "vfonts": "^0.0.3",
+    "vitest": "^0.28.4"
+  }
+}

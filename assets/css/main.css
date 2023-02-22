@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --c-white: lab(100% 0 0);
+
+  --c-black-a-015: lab(0% 25 17 / .15);
+  --c-black-a-2: lab(0% 25 17 / .2);
+
+  --c-mint: lab(67% -45 17);
+
+  --c-sky-blue: lab(80% 17 56);
+}
