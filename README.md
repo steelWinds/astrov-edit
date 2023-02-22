@@ -9,10 +9,10 @@
 
 </div>
 
-![GitHub top language](https://img.shields.io/github/languages/top/steelWinds/fast-edit)
-![GitHub](https://img.shields.io/github/license/steelWinds/fast-edit)
+![GitHub top language](https://img.shields.io/github/languages/top/steelWinds/astrov-edit)
+![GitHub](https://img.shields.io/github/license/steelWinds/astrov-edit)
 
-# fast-edit
+# astrov-edit
 Text editor for Pet-project
 
 ### Features
@@ -29,8 +29,8 @@ Text editor for Pet-project
 - [Partytown](https://partytown.builder.io/)
 
 ### Fonts:
-- [IBM Plex Mono](https://fonts.google.com/specimen/IBM+Plex+Mono?preview.text=fast-edit&preview.text_type=custom)
-- [Inter](https://fonts.google.com/specimen/Inter?preview.text=fast-edit&preview.text_type=custom)
+- [IBM Plex Mono](https://fonts.google.com/specimen/IBM+Plex+Mono?preview.text=astrov-edit&preview.text_type=custom)
+- [Inter](https://fonts.google.com/specimen/Inter?preview.text=astrov-edit&preview.text_type=custom)
 
 ### UI libraries:
 - [Component+](https://element-plus.org/)
