@@ -16,7 +16,7 @@ specifiers:
   airbnb: ^0.0.2
   autoprefixer: ^10.4.13
   cypress: ^12.4.1
-  element-plus: ^2.2.30
+  element-plus: ^2.2.32
   eslint: ^8.34.0
   eslint-config-airbnb-typescript: ^17.0.0
   eslint-config-google: ^0.14.0
@@ -37,13 +37,13 @@ dependencies:
   '@pinia/nuxt': 0.4.7
   '@typescript-eslint/parser': 5.51.0_eslint@8.34.0
   '@vueuse/core': 9.12.0
-  element-plus: 2.2.30
+  element-plus: 2.2.32
   eslint-config-standard-with-typescript: 34.0.0_b5d7vn5fvb66hlq4xz6bd5gdxm
   eslint-plugin-jsx-a11y: 6.7.1_eslint@8.34.0
   pinia: 2.0.30
 
 devDependencies:
-  '@element-plus/nuxt': 1.0.3_element-plus@2.2.30
+  '@element-plus/nuxt': 1.0.3_element-plus@2.2.32
   '@nuxt/eslint-config': 0.1.1_eslint@8.34.0
   '@nuxt/test-utils': 3.2.2
   '@nuxtjs/eslint-config-typescript': 12.0.0_eslint@8.34.0
@@ -431,14 +431,14 @@ packages:
     peerDependencies:
       vue: ^3.2.0
 
-  /@element-plus/nuxt/1.0.3_element-plus@2.2.30:
+  /@element-plus/nuxt/1.0.3_element-plus@2.2.32:
     resolution: {integrity: sha512-CAmW6bapnVMax5GWxFLtKHPTfmcGuZJyM4p36a5XXUQaUfFxphgEhheEFeNDJn1rd6pMupOMOFFPkYwMPHqMNg==}
     peerDependencies:
       '@element-plus/icons-vue': '>=0.2.6'
       element-plus: '>=2'
     dependencies:
       '@nuxt/kit': 3.2.0
-      element-plus: 2.2.30
+      element-plus: 2.2.32
       magic-string: 0.27.0
       unplugin: 1.0.1
     transitivePeerDependencies:
@@ -3321,8 +3321,8 @@ packages:
   /electron-to-chromium/1.4.295:
     resolution: {integrity: sha512-lEO94zqf1bDA3aepxwnWoHUjA8sZ+2owgcSZjYQy0+uOSEclJX0VieZC+r+wLpSxUHRd6gG32znTWmr+5iGzFw==}
 
-  /element-plus/2.2.30:
-    resolution: {integrity: sha512-HYSnmf2VMGa0gmw03evxevodPy3WimbAd4sfenOAhNs7Wl8IdT+YJjQyGAQjgEjRvhmujN4O/CZqhuEffRyOZg==}
+  /element-plus/2.2.32:
+    resolution: {integrity: sha512-DTJMhYOy6MApbmh6z/95hPTK5WrBiNHGzV4IN+uEkup1WoimQ+Qyt8RxKdTe/X1LWEJ8YgWv/Cl8P4ocrt5z5g==}
     peerDependencies:
       vue: ^3.2.0
     dependencies:
