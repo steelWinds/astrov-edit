@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.6",
-    "@typescript-eslint/parser": "^5.49.0",
+    "@typescript-eslint/parser": "^5.53.0",
     "@vueuse/core": "^9.12.0",
     "element-plus": "^2.2.30",
     "eslint-config-standard-with-typescript": "^34.0.0",
