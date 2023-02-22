@@ -40,7 +40,7 @@
     "nuxt": "npm:nuxt3@latest",
     "postcss": "^8.4.21",
     "postcss-lab-function": "^5.1.0",
-    "tailwindcss": "^3.2.6",
+    "tailwindcss": "^3.2.7",
     "vfonts": "^0.0.3",
     "vitest": "^0.28.4"
   }
