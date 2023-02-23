@@ -17,7 +17,7 @@
     "element-plus": "^2.2.32",
     "eslint-config-standard-with-typescript": "^34.0.0",
     "eslint-plugin-jsx-a11y": "^6.7.1",
-    "pinia": "^2.0.30"
+    "pinia": "^2.0.32"
   },
   "devDependencies": {
     "@element-plus/nuxt": "^1.0.3",
