@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@element-plus/nuxt': ^1.0.3
   '@nuxt/eslint-config': ^0.1.1
-  '@nuxt/test-utils': ^3.2.0
+  '@nuxt/test-utils': ^3.2.2
   '@nuxtjs/eslint-config-typescript': ^12.0.0
   '@nuxtjs/google-fonts': 3.0.0-1
   '@pinia/nuxt': ^0.4.6
@@ -18,7 +18,7 @@ specifiers:
   airbnb: ^0.0.2
   autoprefixer: ^10.4.13
   cypress: ^12.4.1
-  element-plus: ^2.2.30
+  element-plus: ^2.2.32
   eslint: ^8.34.0
   eslint-config-airbnb-typescript: ^17.0.0
   eslint-config-google: ^0.14.0
@@ -31,9 +31,9 @@ specifiers:
   pinia: ^2.0.30
   postcss: ^8.4.21
   postcss-lab-function: ^5.1.0
-  tailwindcss: ^3.2.6
+  tailwindcss: ^3.2.7
   vfonts: ^0.0.3
-  vitest: ^0.28.4
+  vitest: ^0.28.5
 
 dependencies:
   '@nuxtjs/google-fonts': 3.0.0-1
@@ -2530,7 +2530,7 @@ packages:
     resolution: {integrity: sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==}
     requiresBuild: true
     dependencies:
-      '@types/node': 14.18.36
+      '@types/node': 18.13.0
     dev: true
     optional: true
 
@@ -8853,6 +8853,7 @@ packages:
       chokidar: 3.5.3
       webpack-sources: 3.2.3
       webpack-virtual-modules: 0.5.0
+    dev: true
 
   /unstorage/1.1.5:
     resolution: {integrity: sha512-6TZilI4JlubD/uGjhfP8rS8mcxVGVn+RIt1dQG0xJrFvbSqa5UeNpFQ8+g0zktm4laztVvFU/pAnBn8MF0ip3A==}
