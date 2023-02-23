@@ -12,3 +12,7 @@
 
   --c-sky-blue: lab(80% 17 56);
 }
+
+* {
+  font-family: Inter;
+}

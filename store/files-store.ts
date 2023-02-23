@@ -1,23 +1,26 @@
-import type { UploadFileInfo as FileInfo } from 'naive-ui'
+import type { UploadFile } from 'element-plus'
 
 export const useFilesStore = definePiniaStore('files-store', () => {
-  const files = ref<FileInfo[]>([])
+  const files = ref<Map<UploadFile['uid'], UploadFile>>(new Map())
 
-  const updateFilesList = (filesList: FileInfo[]) => {
-    files.value = filesList.filter((item) => !item.status.includes('error'))
+  const addFile = (file: UploadFile) => {
+    if (file.status === 'success') {
+      files.value.set(file.uid, file)
+    }
   }
 
-  const clearFilesList = () => {
-    files.value = []
+  const removeFile = (file: UploadFile) => {
+    files.value.delete(file.uid)
   }
 
-  const filesList = computed(() => files.value
-    .filter((file) => file.file)
-    .map((file) => file.file!))
+  const clearFiles = () => {
+    files.value.clear()
+  }
 
   return {
-    filesList,
-    clearFilesList,
-    updateFilesList
+    files,
+    clearFiles,
+    addFile,
+    removeFile
   }
 })

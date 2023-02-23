@@ -1,41 +1,29 @@
 <template>
-  <div>
-    asdfasdf
-  </div>
+  <div class="tw-flex tw-flex-col">
+    <el-upload
+      drag
+      multiple
+      accept="text/*"
+      @change="filesStore.addFile"
+      @remove="filesStore.removeFile"
+    >
+      <el-icon
+        size="60px"
+      >
+        <el-icon-upload-filled />
+      </el-icon>
+    </el-upload>
 
-  <!--<NUpload
-    multiple
-    :max="3"
-    accept="text/*"
-    @update:file-list="filesStore.updateFilesList"
-  >
-    <NUploadDragger>
-      <figure class="tw-w-14 md:tw-w-20 tw-mx-auto">
-        <ArrowUpload16Filled />
-      </figure>
-
-      <h3 class="tw-text-md md:tw-text-lg">
-        Please click or drag a file to upload
-      </h3>
-    </NUploadDragger>
-  </NUpload>
-
-  <NSpace
-    justify="end"
-    class="tw-mt-4"
-  >
-    <NButton
-      class="tw-bg-mint tw-text-white"
-      color="#42B883"
+    <el-button
+      class="tw-self-end tw-mt-3 tw-bg-mint tw-text-white"
     >
       Upload files
-    </NButton>
-  </NSpace>-->
+    </el-button>
+  </div>
 </template>
 
 <script setup lang="ts">
-// import { ArrowUpload16Filled } from '@vicons/fluent'
-// import { useFilesStore } from '@/store/files-store'
+import { useFilesStore } from '@/store/files-store'
 
-// const filesStore = useFilesStore()
+const filesStore = useFilesStore()
 </script>

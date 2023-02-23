@@ -2,12 +2,9 @@
   <!--<NButtonGroup>-->
   <ClientOnly>
     <el-menu
-      class="tw-h-12"
+      class="tw-h-12 header-menu"
       mode="horizontal"
-      background-color="#42B883"
-      text-color="#ffffff"
-      active-text-color="#FFB85B"
-      menu-trigger="click"
+      menu-trigger="hover"
       unique-opened
     >
       <el-sub-menu
@@ -64,7 +61,10 @@
           View
         </template>
 
-        <el-menu-item index="2-1">
+        <el-menu-item
+          index="2-1"
+          @click="options.theme = true"
+        >
           Theme Settings
         </el-menu-item>
       </el-sub-menu>
@@ -108,17 +108,17 @@
     >
       <StaticOptionsFileOptions />
     </el-dialog>
-  </ClientOnly>
 
-  <!--<NModal
-    v-model:show="options.view"
-    preset="card"
-    class="tw-max-w-xl"
-    title="View options"
-    :bordered="false"
-  >
-    <StaticOptionsViewOptions />
-  </NModal>-->
+    <el-dialog
+      v-model="options.theme"
+      align-center
+      append-to-body
+      class="tw-w-5/6 tw-max-w-xl"
+      title="Theme Options"
+    >
+      <StaticOptionsThemeOptions />
+    </el-dialog>
+  </ClientOnly>
 
   <!--<NModal
     v-model:show="options.inputType"
@@ -136,13 +136,9 @@
 <script setup lang="ts">
 const options = reactive<Record<string, boolean>>({
   file: false,
-  view: false,
+  theme: false,
   inputType: false
 })
-
-const al = () => {
-  alert(1)
-}
 </script>
 
 <style scoped>
@@ -156,11 +152,11 @@ const al = () => {
  border-radius: 0;
 }
 
-/*.header-menu {
+.header-menu {
   border: 0;
 
   --el-menu-bg-color: var(--c-mint);
   --el-menu-active-color: var(--c-sky-blue);
   --el-menu-text-color: var(--c-white);
-}*/
+}
 </style>

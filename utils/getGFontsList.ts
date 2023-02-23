@@ -24,10 +24,8 @@ export const getGFontsList = (
 
   return useFetch(rc.public.gfApiBase, Object.assign(options, {
     query: {
-      [rc.public.gfApiKey]: {
-        key: rc.public.gfApiBase,
-        sort
-      }
+      key: rc.public.gfApiKey,
+      sort
     }
   }))
 }

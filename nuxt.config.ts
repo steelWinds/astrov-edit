@@ -19,6 +19,21 @@ export default defineNuxtConfig({
   },
   modules: [
     [
+      '@nuxtjs/google-fonts',
+      {
+        download: true,
+        overwriting: true,
+        families: {
+          Inter: true
+        },
+        preload: true,
+        preconnect: true,
+        display: 'swap',
+        useStylesheet: true
+      }
+    ],
+    '@vite-pwa/nuxt',
+    [
       '@pinia/nuxt', {
         autoImports: [
           ['defineStore', 'definePiniaStore']
