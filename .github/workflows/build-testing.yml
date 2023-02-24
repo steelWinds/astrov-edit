@@ -4,8 +4,6 @@
 name: Testing CI
 
 on:
-  deployment:
-    branches: [ "main" ]
   push:
     branches: [ "main", "test" ]
   pull_request:
@@ -48,10 +46,18 @@ jobs:
     - name: Install dependencies
       run: pnpm install
 
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - name: Run unit-tests
+    - name: Run Unit-Tests
       run: pnpm test
+
+  #cypress:
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - name: Checkout
+  #      uses: actions/checkout@v3
+
+  #    - name: Cypress run
+  #      uses: cypress-io/github-action@v5.x.x # use the explicit version number
+  #      with:
+  #        build: pnpm build
+  #        start: pnpm preview
 
