@@ -6,7 +6,7 @@ specifiers:
   '@nuxt/test-utils': ^3.2.2
   '@nuxtjs/eslint-config-typescript': ^12.0.0
   '@nuxtjs/google-fonts': 3.0.0-1
-  '@pinia/nuxt': ^0.4.6
+  '@pinia/nuxt': ^0.4.7
   '@types/google.fonts': ^1.0.3
   '@typescript-eslint/eslint-plugin': ^5.49.0
   '@typescript-eslint/parser': ^5.49.0
@@ -2530,7 +2530,7 @@ packages:
     resolution: {integrity: sha512-Cn6WYCm0tXv8p6k+A8PvbDG763EDpBoTzHdA+Q/MF6H3sapGjCm9NzoaJncJS9tUKSuCoDs9XHxYYsQDgxR6kw==}
     requiresBuild: true
     dependencies:
-      '@types/node': 18.13.0
+      '@types/node': 18.14.0
     dev: true
     optional: true
 
@@ -8853,7 +8853,6 @@ packages:
       chokidar: 3.5.3
       webpack-sources: 3.2.3
       webpack-virtual-modules: 0.5.0
-    dev: true
 
   /unstorage/1.1.5:
     resolution: {integrity: sha512-6TZilI4JlubD/uGjhfP8rS8mcxVGVn+RIt1dQG0xJrFvbSqa5UeNpFQ8+g0zktm4laztVvFU/pAnBn8MF0ip3A==}
