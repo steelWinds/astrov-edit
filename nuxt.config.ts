@@ -6,9 +6,10 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   postcss: {
     plugins: {
+      'postcss-preset-env': {},
+      'tailwindcss/nesting': 'postcss-nesting',
       tailwindcss: {},
-      autoprefixer: {},
-      'postcss-lab-function': {}
+      autoprefixer: {}
     }
   },
   runtimeConfig: {

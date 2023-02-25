@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   prefix: 'tw-',
   important: true,
   content: [
@@ -24,7 +25,8 @@ module.exports = {
         'white-300': '#b3b5bd',
         mint: '#42B883',
         charcoal: '#35495E',
-        orange: '#FFB85B'
+        orange: '#FFB85B',
+        midnight: '#191970'
       }
     }
   },

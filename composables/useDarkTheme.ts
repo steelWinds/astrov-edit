@@ -1,8 +1,8 @@
 import { useDark, useToggle } from '@vueuse/core'
 
 const ThemeStates = {
-  LIGHT: 'light',
-  DARK: 'dark'
+  LIGHT: 'tw-light',
+  DARK: 'tw-dark'
 }
 
 export const useDarkTheme = () => {

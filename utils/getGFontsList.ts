@@ -1,31 +1,17 @@
-// interface WebfontFamily {
-//    category?: string | undefined;
-//    kind: string;
-//    family: string;
-//    subsets: string[];
-//    variants: string[];
-//    version: string;
-//    lastModified: string;
-//    files: { [variant: string]: string };
-// }
-
-// interface WebfontList {
-//        kind: string;
-//        items: WebfontFamily[];
-//    }
-
-type SortingValues = 'alpha' | 'date' | 'popularity' | 'style' | 'trending';
+import type { WebfontList, WebfontSortingValues } from '@/utils'
 
 export const getGFontsList = (
-  sort: SortingValues,
-  options: Parameters<typeof useFetch>['1'] = {}
+  sort: WebfontSortingValues,
+  options: Parameters<typeof useFetch<WebfontList>>['1'] = {}
 ) => {
   const rc = useRuntimeConfig()
 
-  return useFetch(rc.public.gfApiBase, Object.assign(options, {
+  return useFetch<WebfontList>(rc.public.gfApiBase, {
     query: {
       key: rc.public.gfApiKey,
       sort
-    }
-  }))
+    },
+    pick: ['items'],
+    ...options
+  })
 }

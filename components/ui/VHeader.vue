@@ -2,7 +2,7 @@
   <!--<NButtonGroup>-->
   <ClientOnly>
     <el-menu
-      class="tw-h-12 header-menu"
+      class="tw-h-12 tw-px-3"
       mode="horizontal"
       menu-trigger="hover"
       unique-opened
@@ -102,6 +102,7 @@
     <el-dialog
       v-model="options.file"
       align-center
+      draggable
       append-to-body
       class="tw-w-5/6 tw-max-w-xl"
       title="Open File"
@@ -112,6 +113,7 @@
     <el-dialog
       v-model="options.theme"
       align-center
+      draggable
       append-to-body
       class="tw-w-5/6 tw-max-w-xl"
       title="Theme Options"
@@ -150,13 +152,5 @@ const options = reactive<Record<string, boolean>>({
  --el-menu-base-level-padding: 10px;
 
  border-radius: 0;
-}
-
-.header-menu {
-  border: 0;
-
-  --el-menu-bg-color: var(--c-mint);
-  --el-menu-active-color: var(--c-sky-blue);
-  --el-menu-text-color: var(--c-white);
 }
 </style>
