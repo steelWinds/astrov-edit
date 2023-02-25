@@ -19,7 +19,7 @@ specifiers:
   '@vueuse/core': ^9.12.0
   airbnb: ^0.0.2
   autoprefixer: ^10.4.13
-  cypress: ^12.4.1
+  cypress: ^12.7.0
   element-plus: ^2.2.32
   eslint: ^8.34.0
   eslint-config-airbnb-typescript: ^17.0.0
@@ -66,7 +66,7 @@ devDependencies:
   '@vue/test-utils': 2.3.0
   airbnb: 0.0.2
   autoprefixer: 10.4.13_postcss@8.4.21
-  cypress: 12.6.0
+  cypress: 12.7.0
   eslint: 8.34.0
   eslint-config-airbnb-typescript: 17.0.0_bkd7arlpdrglnefmq6ivq23fye
   eslint-config-google: 0.14.0_eslint@8.34.0
@@ -4296,8 +4296,8 @@ packages:
     resolution: {integrity: sha512-d4ZVpCW31eWwCMe1YT3ur7mUDnTXbgwyzaL320DrcRT45rfjYxkt5QWLrmOJ+/UEAI2+fQgKe/fCjR8l4TpRgw==}
     dev: true
 
-  /cypress/12.6.0:
-    resolution: {integrity: sha512-WdHSVaS1lumSd5XpVTslZd8ui9GIGphrzvXq9+3DtVhqjRZC5M70gu5SW/Y/SLPq3D1wiXGZoHC6HJ7ESVE2lw==}
+  /cypress/12.7.0:
+    resolution: {integrity: sha512-7rq+nmhzz0u6yabCFyPtADU2OOrYt6pvUau9qV7xyifJ/hnsaw/vkr0tnLlcuuQKUAOC1v1M1e4Z0zG7S0IAvA==}
     engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     hasBin: true
     requiresBuild: true
