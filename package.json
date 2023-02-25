@@ -41,7 +41,7 @@
     "eslint-config-google": "^0.14.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-vue": "^9.9.0",
-    "happy-dom": "^8.2.6",
+    "happy-dom": "^8.9.0",
     "nuxt": "npm:nuxt3@latest",
     "postcss": "^8.4.21",
     "postcss-lab-function": "^5.1.0",
