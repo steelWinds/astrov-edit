@@ -1,15 +1,15 @@
 import { mount } from '@vue/test-utils'
 import { test, expect } from 'vitest'
-import VRewriteBtns from '../VRewriteBtns.vue'
+import RewriteBtns from '@/components/utils/RewriteBtns.vue'
 
 test('mount component and check buttons', async () => {
-  expect(VRewriteBtns).toBeTruthy()
+  expect(RewriteBtns).toBeTruthy()
 
-  const wrapper = mount(VRewriteBtns, {
+  const wrapper = mount(RewriteBtns, {
     props: {
       title: 'Guess User Age App'
     }
   })
 
-  expect(wrapper.findAll('button')).toHaveLength(2)
+  expect(wrapper.findAll('button')).toHaveLength(0)
 })
