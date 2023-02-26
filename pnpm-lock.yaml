@@ -8,6 +8,7 @@ specifiers:
   '@nuxtjs/eslint-config-typescript': ^12.0.0
   '@nuxtjs/google-fonts': 3.0.0-1
   '@pinia/nuxt': ^0.4.7
+  '@pinia/testing': ^0.0.15
   '@types/google.fonts': ^1.0.3
   '@types/lodash-es': ^4.17.6
   '@typescript-eslint/eslint-plugin': ^5.49.0
@@ -57,6 +58,7 @@ devDependencies:
   '@nuxt/eslint-config': 0.1.1_eslint@8.34.0
   '@nuxt/test-utils': 3.2.2
   '@nuxtjs/eslint-config-typescript': 12.0.0_eslint@8.34.0
+  '@pinia/testing': 0.0.15_pinia@2.0.32
   '@types/google.fonts': 1.0.3
   '@types/lodash-es': 4.17.6
   '@typescript-eslint/eslint-plugin': 5.53.0_dbs2zxbe2aiqaiiio3svelvkai
@@ -2458,6 +2460,18 @@ packages:
       - typescript
       - vue
     dev: false
+
+  /@pinia/testing/0.0.15_pinia@2.0.32:
+    resolution: {integrity: sha512-Ykz5sPUVDphDMssA27+ExPSzxqfn7Y3jax77KA0AChDB6ODu31CnXIwoiUG+U5WA6ey7gzHkZh8wlnAtzVnB8g==}
+    peerDependencies:
+      pinia: '>=2.0.31'
+    dependencies:
+      pinia: 2.0.32
+      vue-demi: 0.13.11
+    transitivePeerDependencies:
+      - '@vue/composition-api'
+      - vue
+    dev: true
 
   /@pkgr/utils/2.3.1:
     resolution: {integrity: sha512-wfzX8kc1PMyUILA+1Z/EqoE4UCXGy0iRGMhPwdfae1+f0OXlLqCk+By+aMzgJBzR9AzS4CDizioG6Ss1gvAFJw==}
@@ -7526,7 +7540,6 @@ packages:
     dependencies:
       '@vue/devtools-api': 6.5.0
       vue-demi: 0.13.11
-    dev: false
 
   /pkg-types/1.0.2:
     resolution: {integrity: sha512-hM58GKXOcj8WTqUXnsQyJYXdeAPbythQgEF3nTcEo+nkD49chjQ9IKm/QJy9xf6JakXptz86h7ecP2024rrLaQ==}

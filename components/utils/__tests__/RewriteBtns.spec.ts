@@ -2,7 +2,7 @@ import { mount } from '@vue/test-utils'
 import { test, expect } from 'vitest'
 import RewriteBtns from '@/components/utils/RewriteBtns.vue'
 
-test('mount component and check buttons', async () => {
+test('Test RewriteBtnsComponent', async () => {
   expect(RewriteBtns).toBeTruthy()
 
   const wrapper = mount(RewriteBtns, {
