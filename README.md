@@ -25,11 +25,10 @@ Text editor for Pet-project
   - [API EyeDropper](https://wicg.github.io/eyedropper-api/)
   - [URL protocol handler API](https://pr-preview.s3.amazonaws.com/w3c/manifest/pull/972.html#protocol_handlers-member)
   - [File Handling API](https://tinyurl.com/file-handling-design)
+  - [Local Font Access API](https://developer.mozilla.org/en-US/docs/Web/API/Local_Font_Access_API)
 - [Tailwindcss](https://tailwindcss.com/)
-- [Partytown](https://partytown.builder.io/)
 
 ### Fonts:
-- [IBM Plex Mono](https://fonts.google.com/specimen/IBM+Plex+Mono?preview.text=astrov-edit&preview.text_type=custom)
 - [Inter](https://fonts.google.com/specimen/Inter?preview.text=astrov-edit&preview.text_type=custom)
 
 ### UI libraries:
@@ -37,6 +36,7 @@ Text editor for Pet-project
 
 ### Tests libraries
 - [Vitest](https://vitest.dev/) *for unit-tests*
+- [Vue Test Utils](https://test-utils.vuejs.org/guide/essentials/forms.html)
 - [Cypress](https://www.cypress.io/) *for E2E-tests*
 ## License
 
