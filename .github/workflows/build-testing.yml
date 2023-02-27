@@ -43,6 +43,9 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-pnpm-store-
 
+    - name: Config
+      run: pnpm config set auto-install-peers true
+
     - name: Install dependencies
       run: pnpm install
 
