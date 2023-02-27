@@ -1,5 +1,7 @@
 <template>
   <div>
-    jopa
+    Text
   </div>
 </template>
+
+<script></script>

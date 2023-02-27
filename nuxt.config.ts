@@ -46,6 +46,7 @@ export default defineNuxtConfig({
       {
         imports: ['ElButton']
       }
-    ]
+    ],
+    'nuxt-vitest'
   ]
 })

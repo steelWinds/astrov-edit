@@ -2,7 +2,7 @@
   <!--<NButtonGroup>-->
   <ClientOnly>
     <el-menu
-      class="tw-h-12 tw-px-3"
+      class="!tw-h-12 !tw-px-3"
       mode="horizontal"
       menu-trigger="hover"
       unique-opened
@@ -115,7 +115,7 @@
       align-center
       draggable
       append-to-body
-      class="tw-w-5/6 tw-max-w-xl"
+      class="!tw-w-5/6 !tw-max-w-xl"
       title="Theme Options"
     >
       <StaticOptionsThemeOptions />

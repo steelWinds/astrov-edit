@@ -9,10 +9,12 @@
     /* Colors */
     --c-white: lab(100% 0 0);
     --c-white-a-7: lab(100% 0 0 / .7);
+    --c-white-a-6: lab(100% 0 0 / .6);
     --c-white-a-2: lab(100% 0 0 / .2);
 
     --c-black-a-015: lab(0% 25 17 / .15);
     --c-black-a-2: lab(0% 25 17 / .2);
+    --c-black-a-6: rgba(0 0 0 / .6);
     --c-black: lab(0% 25 17);
 
     --c-mint: lab(67% -45 17);
@@ -25,7 +27,8 @@
 
     --c-gray: lab(76% 0 -2);
 
-    --bcd-base: 1.5px;
+    --bcd-base: 3px;
+    --bcd-xl: 12px;
   }
 
   * {
@@ -54,6 +57,40 @@
       background-color: transparent !important;
     }
   }
+
+  .el-dialog {
+    &:before {
+      content: '';
+
+      position: absolute;
+
+      display: block;
+      inset: 0px 0px 0px 0px;
+
+      background-color: --el-dialog-bg-color;
+      backdrop-filter: blur(var(--bcd-base));
+      z-index: -1000;
+    }
+  }
+
+  .el-select-v2__popper {
+    backdrop-filter: blur(var(--bcd-xl));
+  }
+
+  .el-loading-mask {
+    &:before {
+      content: '';
+
+      position: absolute;
+
+      display: block;
+      inset: 0px 0px 0px 0px;
+
+      background-color: --el-mask-color;
+      backdrop-filter: blur(var(--bcd-xl));
+      z-index: -1000;
+    }
+  }
 }
 
 @layer theme {
@@ -66,10 +103,13 @@
       --el-menu-hover-text-color: var(--c-mint);
       --el-menu-text-color: var(--c-white);
 
+      .el-loading-mask {
+        --el-mask-color: var(--c-black-a-6);
+        --el-color-primary: var(--c-orange);
+      }
+
       .el-dialog {
         --el-dialog-bg-color: var(--c-midnight-blue-a-7);
-
-        backdrop-filter: blur(var(--bcd-base));
 
         .el-dialog__body {
           color: var(--c-white) !important;
@@ -84,10 +124,16 @@
         --el-bg-color-overlay: var(--c-midnight-blue-a-7);
         --el-border-color-light: var(--c-midnight-blue) !important;
 
-        backdrop-filter: blur(var(--bcd-base));
-
         .el-select-dropdown__option-item {
           color: var(--c-mint);
+
+          &.is-selected {
+            color: var(--c-orange);
+          }
+
+          &:is(.hover, .is-selected) {
+            --el-fill-color-light: var(--c-black-a-5);
+          }
         }
       }
 
@@ -172,6 +218,21 @@
       --el-menu-active-color: var(--c-orange);
       --el-menu-hover-text-color: var(--c-midnight-blue);
       --el-menu-text-color: var(--c-white);
+
+      .el-loading-mask {
+        --el-mask-color: var(--c-white-a-6);
+        --el-color-primary: var(--c-mint);
+      }
+
+       .el-select-v2__popper {
+        --el-bg-color-overlay: var(--c-white-a-7);
+
+        .el-select-dropdown__option-item {
+          &:is(.hover, .is-selected) {
+            --el-fill-color-light: var(--c-black-a-015);
+          }
+        }
+      }
 
       .el-dialog {
         --el-dialog-bg-color: var(--c-white-a-7);

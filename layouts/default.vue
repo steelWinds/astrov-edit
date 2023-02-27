@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useDarkTheme } from '@/composables/useDarkTheme'
+import { useThemeStore } from '@/store/theme-store'
 
-useDarkTheme()
+useThemeStore()
 </script>
 
 <template>

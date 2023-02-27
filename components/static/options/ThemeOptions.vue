@@ -8,114 +8,128 @@
       <el-switch v-model="isDark" />
     </el-row>
 
-    <el-row
-      justify="space-between"
-      align="middle"
+    <div
+      v-loading="pendingFonts"
+      class="tw-grid tw-gap-2"
     >
-      <h3> Font family </h3>
-
-      <el-select-v2
-        v-model="fontTheme.family"
-        :options="fontGroupList"
-        filterable
-        no-data-text="No families"
-        value-key="value.family"
-        @change="onChangeFontsStyles"
+      <el-row
+        class="
+          tw-flex-col
+          !tw-items-start
+          !tw-justify-between
+          tw-space-y-2
+          ultra-sm:tw-flex-row
+          ultra-sm:!tw-space-y-0
+        "
+        align="middle"
       >
-        <template #empty>
-          <el-row
-            v-if="pending"
-            class="tw-p-3 tw-pt-6"
-          >
-            <el-col class="tw-mb-3">
-              <el-progress
-                :percentage="50"
-                :indeterminate="true"
-                :show-text="false"
-              />
-            </el-col>
+        <h3> Font family </h3>
 
-            <el-col class="tw-text-midnight">
-              <h5 class="tw-text-md dark:tw-text-white">
-                Loading...
-              </h5>
-            </el-col>
-          </el-row>
-        </template>
-      </el-select-v2>
-    </el-row>
+        <ClientOnly>
+          <el-select-v2
+            v-model="fontTheme.family"
+            :options="fontGroupList"
+            filterable
+            no-data-text="No families"
+            value-key="value.family"
+            class="tw-w-full ultra-sm:tw-w-auto"
+            @change="onChangeFontsStyles"
+          />
+        </ClientOnly>
+      </el-row>
 
-    <el-row
-      justify="space-between"
-      align="middle"
-    >
-      <h3> Font Size </h3>
-      <ClientOnly>
-        <el-select-v2
-          v-model="fontTheme.size"
-          :options="fontSizes"
-          filterable
-          no-data-text="No sizes"
-        />
-      </ClientOnly>
-    </el-row>
+      <el-row
+        class="
+          tw-flex-col
+          !tw-items-start
+          !tw-justify-between
+          tw-space-y-2
+          ultra-sm:tw-flex-row
+          ultra-sm:!tw-space-y-0
+        "
+        align="middle"
+      >
+        <h3> Font Size </h3>
+        <ClientOnly>
+          <el-select-v2
+            v-model="fontTheme.size"
+            :options="fontSizes"
+            filterable
+            class="tw-w-full ultra-sm:tw-w-auto"
+            no-data-text="No sizes"
+          />
+        </ClientOnly>
+      </el-row>
 
-    <el-row
-      justify="space-between"
-      align="middle"
-    >
-      <h3> Font Weight </h3>
-      <ClientOnly>
-        <el-select-v2
-          v-model="fontTheme.weight"
-          :options="fontWeights"
-          :disabled="fontWeights?.length <= 1"
-          filterable
-          no-data-text="No weights"
-        />
-      </ClientOnly>
-    </el-row>
+      <el-row
+        class="
+          tw-flex-col
+          !tw-items-start
+          !tw-justify-between
+          tw-space-y-2
+          ultra-sm:tw-flex-row
+          ultra-sm:!tw-space-y-0
+        "
+        align="middle"
+      >
+        <h3> Font Weight </h3>
+        <ClientOnly>
+          <el-select-v2
+            v-model="fontTheme.weight"
+            :options="fontWeights"
+            :disabled="fontWeights?.length <= 1"
+            class="tw-w-full ultra-sm:tw-w-auto"
+            filterable
+            no-data-text="No weights"
+          />
+        </ClientOnly>
+      </el-row>
 
-    <el-row
-      justify="space-between"
-      align="middle"
-    >
-      <h3> Font Style </h3>
-      <ClientOnly>
-        <el-select-v2
-          v-model="fontTheme.style"
-          :options="fontStyles"
-          :disabled="fontStyles?.length <= 1"
-          filterable
-          no-data-text="No styles"
-        />
-      </ClientOnly>
-    </el-row>
+      <el-row
+        class="
+          tw-flex-col
+          !tw-items-start
+          !tw-justify-between
+          tw-space-y-2
+          ultra-sm:tw-flex-row
+          ultra-sm:!tw-space-y-0
+        "
+        align="middle"
+      >
+        <h3> Font Style </h3>
+        <ClientOnly>
+          <el-select-v2
+            v-model="fontTheme.style"
+            :options="fontStyles"
+            :disabled="fontStyles?.length <= 1"
+            class="tw-w-full ultra-sm:tw-w-auto"
+            filterable
+            no-data-text="No styles"
+          />
+        </ClientOnly>
+      </el-row>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useThemeStore } from '@/store/theme-store'
-import { useLocalFonts } from '@/composables/useLocalFonts'
+import { useFontStore } from '@/store/font-store'
 import { groupBy } from 'lodash-es'
 
 const themeStore = useThemeStore()
-const { getLocalFonts } = useLocalFonts()
+const fontStore = useFontStore()
+const { isDark } = storeToRefs(themeStore)
 const {
-  localFontsList,
-  localFontsExecute
-} = getLocalFonts()
-const { isDark, fontTheme } = storeToRefs(themeStore)
-const { data, pending, execute: remoteFontsExecute } = getGFontsList(
-  'alpha',
-  { immediate: false }
-)
-
-const fontList = computed(() => localFontsList.value.concat(data.value?.items ?? []))
+  fontTheme,
+  fonts,
+  currentFont,
+  pendingFonts
+} = storeToRefs(fontStore)
 
 const fontGroupList = computed<any>(() => {
-  const groups = groupBy(fontList.value, f => 'files' in f ? 'Remote' : 'Local')
+  const groups = groupBy(fonts.value, f => 'files' in f ? 'Remote' : 'Local')
 
   return Object.entries(groups)
     .map(([group, fonts]) => {
@@ -126,10 +140,6 @@ const fontGroupList = computed<any>(() => {
       }
     })
 })
-
-const currentFont = computed(() => fontList.value
-  .find((font) => font.family === fontTheme.value.family)
-)
 
 const fontWeights = computed<any>(() => fontTheme.value.availableWeight
   .map((w) => ({ label: w, value: w }))
@@ -143,12 +153,11 @@ const fontSizes = Array.from({ length: 99 }, (_, i) => ({ value: i + 2, label: i
 
 const onChangeFontsStyles = () => {
   if (currentFont.value?.variants) {
-    themeStore.setAvailableOptions(currentFont.value?.variants)
+    fontStore.setAvailableOptions(currentFont.value?.variants)
   }
 }
 
 onMounted(() => {
-  localFontsExecute()
-  remoteFontsExecute()
+  fontStore.getFonts()
 })
 </script>
