@@ -1,7 +1,8 @@
 <template>
   <div>
-    Text
+    text
   </div>
 </template>
 
-<script></script>
+<script setup lang="ts">
+</script>

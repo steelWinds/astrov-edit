@@ -9,7 +9,6 @@
     </el-row>
 
     <div
-      v-loading="pendingFonts"
       class="tw-grid tw-gap-2"
     >
       <el-row
@@ -28,12 +27,13 @@
         <ClientOnly>
           <el-select-v2
             v-model="fontTheme.family"
+            v-loading="pendingFonts"
+            v-disabled="pendingFonts"
             :options="fontGroupList"
             filterable
             no-data-text="No families"
             value-key="value.family"
-            class="tw-w-full ultra-sm:tw-w-auto"
-            @change="onChangeFontsStyles"
+            class="tw-w-full ultra-sm:tw-w-auto loading-mask-10"
           />
         </ClientOnly>
       </el-row>
@@ -53,6 +53,7 @@
         <ClientOnly>
           <el-select-v2
             v-model="fontTheme.size"
+            :disabled="pendingFonts"
             :options="fontSizes"
             filterable
             class="tw-w-full ultra-sm:tw-w-auto"
@@ -77,7 +78,7 @@
           <el-select-v2
             v-model="fontTheme.weight"
             :options="fontWeights"
-            :disabled="fontWeights?.length <= 1"
+            :disabled="fontWeights?.length <= 1 || pendingFonts"
             class="tw-w-full ultra-sm:tw-w-auto"
             filterable
             no-data-text="No weights"
@@ -101,7 +102,7 @@
           <el-select-v2
             v-model="fontTheme.style"
             :options="fontStyles"
-            :disabled="fontStyles?.length <= 1"
+            :disabled="fontStyles?.length <= 1 || pendingFonts"
             class="tw-w-full ultra-sm:tw-w-auto"
             filterable
             no-data-text="No styles"
@@ -124,7 +125,6 @@ const { isDark } = storeToRefs(themeStore)
 const {
   fontTheme,
   fonts,
-  currentFont,
   pendingFonts
 } = storeToRefs(fontStore)
 
@@ -150,12 +150,6 @@ const fontStyles = computed<any>(() => fontTheme.value.availableStyles
 )
 
 const fontSizes = Array.from({ length: 99 }, (_, i) => ({ value: i + 2, label: i + 2 })) as any
-
-const onChangeFontsStyles = () => {
-  if (currentFont.value?.variants) {
-    fontStore.setAvailableOptions(currentFont.value?.variants)
-  }
-}
 
 onMounted(() => {
   fontStore.getFonts()

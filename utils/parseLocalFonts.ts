@@ -1,8 +1,8 @@
-import type { FontData } from '@/utils'
+import type { FontData, FontWeightsKeys } from '@/utils'
 
 import { groupBy } from 'lodash-es'
 
-const AvailableWords = Object.keys(FontBaseWeight).concat('italic')
+const AvailableWords = Object.keys(FONT_BASE_WEIGHTS).concat('italic')
 
 export const parseLocalFonts = (localFonts: FontData[]) => {
   return Object.entries(groupBy(localFonts, 'family'))
@@ -17,7 +17,9 @@ export const parseLocalFonts = (localFonts: FontData[]) => {
           const style = font.style
             .toLowerCase()
             .split(' ')
-            .flatMap(s => s === 'regular' || s === 'italic' ? s : FontBaseWeight[s])
+            .flatMap(
+              s => s === 'regular' || s === 'italic' ? s : FONT_BASE_WEIGHTS[s as FontWeightsKeys]
+            )
 
           return style.join('')
         })

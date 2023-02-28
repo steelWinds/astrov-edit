@@ -27,6 +27,7 @@
 
     --c-gray: lab(76% 0 -2);
 
+    --bcd-xs: 1px;
     --bcd-base: 3px;
     --bcd-xl: 12px;
   }
@@ -74,20 +75,27 @@
   }
 
   .el-select-v2__popper {
-    backdrop-filter: blur(var(--bcd-xl));
+    backdrop-filter: blur(var(--bcd-base));
+  }
+
+  .loading-mask-10 > .el-loading-mask {
+    --el-loading-spinner-size: 10%;
   }
 
   .el-loading-mask {
+    border-radius: var(--el-border-radius-base);
+
     &:before {
       content: '';
 
       position: absolute;
 
       display: block;
-      inset: 0px 0px 0px 0px;
+      height: 100%;
+      width: 100%;
 
       background-color: --el-mask-color;
-      backdrop-filter: blur(var(--bcd-xl));
+      backdrop-filter: blur(var(--bcd-base));
       z-index: -1000;
     }
   }

@@ -1,5 +1,10 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  imports: {
+    dirs: [
+      'utils/**'
+    ]
+  },
   typescript: {
     strict: true
   },
@@ -16,6 +21,12 @@ export default defineNuxtConfig({
     public: {
       gfApiKey: '',
       gfApiBase: ''
+    }
+  },
+  vite: {
+    esbuild: {
+      // TODO: add support for DEV
+      // drop: ['console', 'debugger']
     }
   },
   modules: [

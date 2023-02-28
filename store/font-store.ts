@@ -1,30 +1,23 @@
-import type { WebfontFamily } from '@/utils'
+import type { FontWeightsValues, FontStyles } from '@/utils'
 
 const DEFAULT_FONT_PRESET = {
   family: 'monospace',
   size: 12,
-  weight: 400,
-  style: 'regular',
+  weight: '400' as FontWeightsValues,
+  style: 'regular' as FontStyles,
   availableWeight: [
-    400,
-    500
-  ],
+    '400',
+    '500'
+  ] as FontWeightsValues[],
   availableStyles: [
-    'regular',
+    'normal',
     'italic'
-  ]
+  ] as FontStyles[]
 }
 
 export const useFontStore = definePiniaStore('font-store', () => {
   const fontTheme = reactive(DEFAULT_FONT_PRESET)
-  const {
-    data,
-    pending: pendingRemoteFonts,
-    execute: getRemoteFonts
-  } = getGFontsList(
-    'alpha',
-    { immediate: false }
-  )
+  const { fetchGFonts, pending: pendingGFonts, gFonts } = getGFontsList('alpha')
   const {
     localFonts,
     pending: pendingLocalFonts,
@@ -32,13 +25,13 @@ export const useFontStore = definePiniaStore('font-store', () => {
   } = useLocalFonts()
 
   const getFonts = () => {
-    getRemoteFonts()
+    fetchGFonts()
     getLocalFonts()
   }
 
-  const pendingFonts = computed(() => pendingLocalFonts.value || pendingRemoteFonts.value)
+  const pendingFonts = computed(() => pendingLocalFonts.value || pendingGFonts.value)
 
-  const remoteFonts = computed(() => data.value?.items ?? [])
+  const remoteFonts = computed(() => gFonts.value)
 
   const fonts = computed(() => localFonts.value.concat(remoteFonts.value))
 
@@ -50,13 +43,11 @@ export const useFontStore = definePiniaStore('font-store', () => {
     Object.assign(fontTheme, DEFAULT_FONT_PRESET)
   }
 
-  const setAvailableOptions = (
-    variants: WebfontFamily['variants']
-  ) => {
+  const setAvailableOptions = () => {
     [
       fontTheme.availableWeight,
       fontTheme.availableStyles
-    ] = parseWebfontVariants(variants)
+    ] = parseWebfontVariants(currentFont.value?.variants)
 
     setDefaultOptions()
   }
@@ -66,10 +57,12 @@ export const useFontStore = definePiniaStore('font-store', () => {
       fontTheme.style,
       fontTheme.weight
     ] = [
-      fontTheme.availableStyles?.[0] ?? 'regular',
-      fontTheme.availableWeight?.[0] ?? FontBaseWeight[fontTheme.style]
+      fontTheme.availableStyles?.[0] ?? 'Unnamed',
+      fontTheme.availableWeight?.[0] ?? '400'
     ]
   }
+
+  watch(() => fontTheme.family, setAvailableOptions)
 
   return {
     setAvailableOptions,
