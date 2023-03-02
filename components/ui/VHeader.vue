@@ -5,7 +5,7 @@
     <OnClickOutside @trigger="closeCurrentSubmenu">
       <el-menu
         ref="refMenu"
-        class="!tw-h-10 !tw-px-3"
+        class="tw-h-12 !tw-px-3 md:tw-h-10"
         mode="horizontal"
         :menu-trigger="menuTriggerType"
         unique-opened

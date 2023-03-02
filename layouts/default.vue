@@ -7,12 +7,17 @@ useThemeStore()
 <template>
   <el-container class="!tw-h-screen !tw-overflow-hidden">
     <el-header
+      height="48"
       class="
         !tw-w-full
         !tw-z-10
-        !tw-h-10
         tw-order-last
+        tw-fixed
+        tw-left-0
+        tw-bottom-0
         md:tw-order-first
+        md:tw-static
+        md:tw-h-10
       "
     >
       <UiVHeader />

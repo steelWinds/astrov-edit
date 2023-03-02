@@ -143,6 +143,12 @@
       --el-menu-text-color: var(--c-white);
       --el-menu-hover-bg-color: var(--c-black);
       --el-color-primary: var(--c-orange);
+      --el-text-color-regular: var(--c-white);
+
+      .el-button {
+        --el-button-bg-color: var(--c-mint);
+        --el-button-hover-bg-color: var(--c-midnight-blue) !important;
+      }
 
       .el-notification {
         --el-notification-border-color: var(--c-midnight-blue-7);
