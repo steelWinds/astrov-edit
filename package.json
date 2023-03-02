@@ -22,15 +22,13 @@
     "lodash-es": "^4.17.21",
     "pinia": "^2.0.32",
     "pinia-plugin-persistedstate": "^3.1.0",
-    "serialize-anything": "^1.2.3",
-    "ufo": "^1.1.1",
-    "zipson": "^0.2.12"
+    "ufo": "^1.1.1"
   },
   "devDependencies": {
     "@element-plus/nuxt": "^1.0.3",
     "@faker-js/faker": "^7.6.0",
     "@nuxt/eslint-config": "^0.1.1",
-    "@nuxt/test-utils": "^3.2.2",
+    "@nuxt/test-utils": "^3.2.3",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@pinia-plugin-persistedstate/nuxt": "^1.0.0",
     "@pinia/testing": "^0.0.15",
@@ -50,7 +48,6 @@
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-vue": "^9.9.0",
     "happy-dom": "^8.9.0",
-    "jsdom": "^21.1.0",
     "nuxt": "npm:nuxt3@latest",
     "nuxt-vitest": "^0.6.6",
     "postcss": "^8.4.21",
@@ -58,7 +55,6 @@
     "postcss-nesting": "^11.2.1",
     "postcss-preset-env": "^8.0.1",
     "tailwindcss": "^3.2.7",
-    "vfonts": "^0.0.3",
-    "vitest": "^0.29.1"
+    "vitest": "^0.29.2"
   }
 }
