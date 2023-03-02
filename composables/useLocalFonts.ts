@@ -1,27 +1,28 @@
-import type { LocalFamily } from '@/utils'
-
 import { useToggle } from '@vueuse/core'
 
 export const useLocalFonts = () => {
-  const localFonts = ref <LocalFamily[]>([])
-  const [denied, toggleDenied] = useToggle(true)
+  const localFonts = ref<LocalFamily[]>([])
+  const [denied, toggleDenied] = useToggle(false)
   const [pending, togglePending] = useToggle(false)
-
-  const testLocalFonts = () => {
-    return window && 'queryLocalFonts' in window
-  }
+  const [isSupported, toggleSupported] = useToggle(true)
 
   const execute = async () => {
-    try {
-      if (!testLocalFonts()) throw new Error()
+    if (!process.client || !useTestLocalFonts()) {
+      toggleSupported(false)
 
+      return
+    }
+
+    try {
       togglePending(true)
 
-      const availableFonts = await window.queryLocalFonts()
+      const availableFonts = await self.queryLocalFonts()
+
+      if (!availableFonts?.length) throw new Error('Permission denied')
 
       localFonts.value = parseLocalFonts(availableFonts)
-
-      toggleDenied(false)
+    } catch (err) {
+      toggleDenied(true)
     } finally {
       togglePending(false)
     }
@@ -31,6 +32,7 @@ export const useLocalFonts = () => {
     localFonts,
     denied,
     execute,
-    pending
+    pending,
+    isSupported
   }
 }

@@ -1,5 +1,3 @@
-import type { AvailableFontWords } from '@/utils'
-
 export const FONT_BASE_WEIGHTS = {
   thin: '100',
   extralight: '200',

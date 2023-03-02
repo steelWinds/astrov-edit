@@ -1,12 +1,10 @@
-import { WebfontFamily } from '@/utils'
 import { faker } from '@faker-js/faker'
-import { getFakeFilePahts } from '@/datasets/helpers/getFakeFilePaths'
 
 const getRandomVariants = (len: number) => {
   const variants = []
 
   for (let i = 0; i < len; i++) {
-    const key = faker.helpers.objectKey(FONT_BASE_WEIGHTS)
+    const key = faker.helpers.objectValue(FONT_BASE_WEIGHTS)
     const value = faker.helpers.arrayElement(FONT_BASE_STYLES)
 
     variants.push(`${key}${value}`)
@@ -22,7 +20,7 @@ const getRandomVariants = (len: number) => {
 const getFakeVariantsPaths = (len: number) => {
   return Object.fromEntries(
     Array.from({ length: len }, () => {
-      return [faker.helpers.arrayElement(FONT_BASE_STYLES), getFakeFilePahts(0)[0]]
+      return [faker.helpers.arrayElement(FONT_BASE_STYLES), faker.system.filePath()]
     })
   )
 }

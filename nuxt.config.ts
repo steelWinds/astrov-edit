@@ -23,12 +23,6 @@ export default defineNuxtConfig({
       gfApiBase: ''
     }
   },
-  vite: {
-    esbuild: {
-      // TODO: add support for DEV
-      // drop: ['console', 'debugger']
-    }
-  },
   modules: [
     [
       '@nuxtjs/google-fonts',
@@ -52,10 +46,11 @@ export default defineNuxtConfig({
         ]
       }
     ],
+    '@pinia-plugin-persistedstate/nuxt',
     [
       '@element-plus/nuxt',
       {
-        imports: ['ElButton']
+        themes: ['dark']
       }
     ],
     'nuxt-vitest'

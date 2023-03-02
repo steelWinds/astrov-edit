@@ -28,7 +28,7 @@
           <el-select-v2
             v-model="fontTheme.family"
             v-loading="pendingFonts"
-            v-disabled="pendingFonts"
+            :disabled="pendingFonts"
             :options="fontGroupList"
             filterable
             no-data-text="No families"
@@ -117,15 +117,19 @@
 import { storeToRefs } from 'pinia'
 import { useThemeStore } from '@/store/theme-store'
 import { useFontStore } from '@/store/font-store'
+import { useNotificationStore } from '@/store/notification-store'
 import { groupBy } from 'lodash-es'
 
+const notificationStore = useNotificationStore()
 const themeStore = useThemeStore()
 const fontStore = useFontStore()
 const { isDark } = storeToRefs(themeStore)
 const {
   fontTheme,
   fonts,
-  pendingFonts
+  pendingFonts,
+  localFontsSupported,
+  localFontsDenied
 } = storeToRefs(fontStore)
 
 const fontGroupList = computed<any>(() => {
@@ -151,7 +155,32 @@ const fontStyles = computed<any>(() => fontTheme.value.availableStyles
 
 const fontSizes = Array.from({ length: 99 }, (_, i) => ({ value: i + 2, label: i + 2 })) as any
 
-onMounted(() => {
-  fontStore.getFonts()
+onMounted(async () => {
+  await fontStore.getFonts()
+
+  notificationStore.open(
+    'local-fonts-supported',
+    !localFontsSupported.value,
+    {
+      message: `
+        You browser don't supporting local fonts,
+        now you can use only fonts from Google Fonts
+      `,
+      type: 'warning',
+      duration: 99999
+    }
+  )
+
+  notificationStore.open(
+    'local-fonts-denied',
+    localFontsDenied.value,
+    {
+      message: `
+        You denied access to your local fonts,
+        now you can use only fonts from Google Fonts
+      `,
+      type: 'warning'
+    }
+  )
 })
 </script>

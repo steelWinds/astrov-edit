@@ -1,5 +1,3 @@
-import type { FontData, FontWeightsKeys } from '@/utils'
-
 import { groupBy } from 'lodash-es'
 
 const AvailableWords = Object.keys(FONT_BASE_WEIGHTS).concat('italic')

@@ -1,7 +1,7 @@
 import { Window } from 'happy-dom'
 
-export const syncDOMUpdate = () => {
+export const useDOMNextTick = () => {
   const { happyDOM } = new Window()
 
-  return happyDOM.whenAsyncComplete()
+  return happyDOM.whenAsyncComplete
 }

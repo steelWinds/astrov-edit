@@ -1,31 +1,17 @@
-import type { WebfontList, WebfontFamily, WebfontSortingValues } from '@/utils'
+import { useRuntimeConfig } from '#imports'
+import { useFetch } from '@vueuse/core'
+import { withQuery } from 'ufo'
 
-// TODO: Fix it
 export const getGFontsList = (
   sort: WebfontSortingValues
 ) => {
-  const gFonts = ref<WebfontFamily[]>([])
-  const pending = ref(true)
+  const rc = useRuntimeConfig()
 
-  const fetchGFonts = async () => {
-    const rc = useRuntimeConfig()
+  const url = withQuery(rc.public.gfApiBase, {
+    key: rc.public.gfApiKey,
+    sort
+  })
 
-    const { data, pending: fetchPending, execute } = useLazyFetch<WebfontList>(rc.public.gfApiBase, {
-      query: {
-        key: rc.public.gfApiKey,
-        sort
-      },
-      pick: ['items'],
-      server: false
-    })
-
-    execute()
-
-    watch([data, fetchPending], ([f, p]) => {
-      gFonts.value = f?.items ?? []
-      pending.value = p
-    }, { immediate: true })
-  }
-
-  return { fetchGFonts, pending, gFonts }
+  return useFetch(url, { method: 'GET' }, { immediate: false })
+    .json<WebfontList>()
 }

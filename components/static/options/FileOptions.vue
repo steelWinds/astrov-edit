@@ -12,6 +12,10 @@
       >
         <el-icon-upload-filled />
       </el-icon>
+
+      <div class="el-upload__text">
+        Drop file here or <em>click to upload</em>
+      </div>
     </el-upload>
 
     <el-button

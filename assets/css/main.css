@@ -21,6 +21,7 @@
 
     --c-midnight-blue: lab(15% 26 -51);
     --c-midnight-blue-a-7: lab(15% 26 -51 / .65);
+    --c-midnight-blue-a-6: lab(15% 26 -51 / .6);
     --c-midnight-blue-a-4: lab(15% 26 -51 / .45);
 
     --c-orange: lab(80% 17 56);
@@ -34,6 +35,28 @@
 
   * {
     font-family: Inter;
+  }
+
+  .el-notification {
+    --el-notification-radius: var(--el-border-radius-small) !important;
+    --el-notification-padding: 10px 26px 10px 10px !important;
+
+    backdrop-filter: blur(var(--bcd-base)) !important;
+
+    .el-notification__content {
+      text-align: start;
+    }
+  }
+
+  .el-menu--horizontal {
+    @media (width < 768px) {
+      border-bottom: 0 !important;
+
+      .el-sub-menu.is-active .el-sub-menu__title {
+        border-bottom: 0 !important;
+        border-top: 2px solid var(--el-menu-active-color);
+      }
+    }
   }
 
   .el-header {
@@ -68,7 +91,7 @@
       display: block;
       inset: 0px 0px 0px 0px;
 
-      background-color: --el-dialog-bg-color;
+      background-color: var(--el-dialog-bg-color);
       backdrop-filter: blur(var(--bcd-base));
       z-index: -1000;
     }
@@ -99,6 +122,14 @@
       z-index: -1000;
     }
   }
+
+  .el-divider {
+    margin: .5rem 0 !important;
+  }
+
+  .el-menu--popup {
+    padding: 0 !important;
+  }
 }
 
 @layer theme {
@@ -110,6 +141,19 @@
       --el-menu-active-color: var(--c-mint);
       --el-menu-hover-text-color: var(--c-mint);
       --el-menu-text-color: var(--c-white);
+      --el-menu-hover-bg-color: var(--c-black);
+      --el-color-primary: var(--c-orange);
+
+      .el-notification {
+        --el-notification-border-color: var(--c-midnight-blue-7);
+        --el-notification-content-color: var(--c-white);
+
+        background-color: var(--c-midnight-blue-a-6) !important;
+
+        .el-checkbox {
+          --el-checkbox-text-color: var(--c-white);
+        }
+      }
 
       .el-loading-mask {
         --el-mask-color: var(--c-black-a-6);
@@ -226,6 +270,11 @@
       --el-menu-active-color: var(--c-orange);
       --el-menu-hover-text-color: var(--c-midnight-blue);
       --el-menu-text-color: var(--c-white);
+      --el-color-primary: var(--c-mint);
+
+      .el-notification {
+        background-color: var(--c-white-a-6) !important;
+      }
 
       .el-loading-mask {
         --el-mask-color: var(--c-white-a-6);

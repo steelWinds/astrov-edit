@@ -1,5 +1,3 @@
-import type { FontWeightsValues, FontStyles } from '@/utils'
-
 const DEFAULT_FONT_PRESET = {
   family: 'monospace',
   size: 12,
@@ -17,21 +15,27 @@ const DEFAULT_FONT_PRESET = {
 
 export const useFontStore = definePiniaStore('font-store', () => {
   const fontTheme = reactive(DEFAULT_FONT_PRESET)
-  const { fetchGFonts, pending: pendingGFonts, gFonts } = getGFontsList('alpha')
+
+  const {
+    data: gFonts,
+    isFetching: pendingGFonts,
+    execute: executeGFonts
+  } = getGFontsList('alpha')
   const {
     localFonts,
     pending: pendingLocalFonts,
-    execute: getLocalFonts
+    execute: executeLocalFonts,
+    isSupported: localFontsSupported,
+    denied: localFontsDenied
   } = useLocalFonts()
 
   const getFonts = () => {
-    fetchGFonts()
-    getLocalFonts()
+    return Promise.allSettled([executeGFonts(), executeLocalFonts()])
   }
 
   const pendingFonts = computed(() => pendingLocalFonts.value || pendingGFonts.value)
 
-  const remoteFonts = computed(() => gFonts.value)
+  const remoteFonts = computed(() => gFonts.value?.items ?? [])
 
   const fonts = computed(() => localFonts.value.concat(remoteFonts.value))
 
@@ -65,12 +69,15 @@ export const useFontStore = definePiniaStore('font-store', () => {
   watch(() => fontTheme.family, setAvailableOptions)
 
   return {
+    setDefaultOptions,
     setAvailableOptions,
     setDefaultFontPreset,
     getFonts,
     currentFont,
     fontTheme,
     fonts,
-    pendingFonts
+    pendingFonts,
+    localFontsSupported,
+    localFontsDenied
   }
 })

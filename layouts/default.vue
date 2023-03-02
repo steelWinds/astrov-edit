@@ -5,17 +5,14 @@ useThemeStore()
 </script>
 
 <template>
-  <el-container>
+  <el-container class="!tw-h-screen !tw-overflow-hidden">
     <el-header
       class="
-        tw-w-full
-        tw-z-10
-        tw-sticky
-        tw-top-0
-        tw-left-0
-        tw-overflow-x-auto
-        tw-overflow-y-hidden
-        tw-h-auto
+        !tw-w-full
+        !tw-z-10
+        !tw-h-10
+        tw-order-last
+        md:tw-order-first
       "
     >
       <UiVHeader />
@@ -25,12 +22,12 @@ useThemeStore()
       <slot />
     </el-main>
 
-    <UiVFooter />
+    <UiVFooter
+      class="
+        !tw-h-10
+        tw-order-first
+        md:tw-order-last
+      "
+    />
   </el-container>
 </template>
-
-<style scoped>
-.top-panel-grid {
-  grid-template-columns: 1fr max-content;
-}
-</style>

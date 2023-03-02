@@ -1,5 +1,3 @@
-import type { WebfontFamily } from '@/utils'
-
 export const parseWebfontVariants = <T extends Array<any>, U extends Array<any>>(
   variants: WebfontFamily['variants'] = []
 ): [T, U] => {

@@ -1,6 +1,7 @@
 import { describe, test, beforeEach } from 'vitest'
 import { setActivePinia, createPinia } from 'pinia'
 import { useThemeStore, ThemeStates } from '@/store/theme-store'
+import { useMediaQuery } from '@vueuse/core'
 
 describe('Spec of pinia theme-store', () => {
   beforeEach(() => {
@@ -9,11 +10,10 @@ describe('Spec of pinia theme-store', () => {
 
   test.concurrent('Set prefer color theme', async ({ expect }) => {
     const themeStore = useThemeStore()
-    const window = new Window()
 
-    await syncDOMUpdate()
+    await useDOMNextTick()
 
-    const isDark = window.matchMedia('(prefer-color-scheme: dark)').matches
+    const isDark = unref(useMediaQuery('(prefer-color-scheme: dark)'))
 
     expect(themeStore.isDark).toBe(isDark)
   })
@@ -22,14 +22,16 @@ describe('Spec of pinia theme-store', () => {
     const themeStore = useThemeStore()
 
     themeStore.toggleDarkTheme(false)
-    await syncDOMUpdate()
+
+    await useDOMNextTick()
 
     expect(themeStore.isDark).toBeFalsy()
     expect(document.documentElement.classList.contains(ThemeStates.LIGHT))
       .toBeTruthy()
 
     themeStore.toggleDarkTheme(true)
-    await syncDOMUpdate()
+
+    await useDOMNextTick()
 
     expect(themeStore.isDark).toBeTruthy()
     expect(document.documentElement.classList.contains(ThemeStates.DARK))
