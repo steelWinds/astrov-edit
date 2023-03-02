@@ -166,8 +166,7 @@ onMounted(async () => {
         You browser don't supporting local fonts,
         now you can use only fonts from Google Fonts
       `,
-      type: 'warning',
-      duration: 99999
+      type: 'warning'
     }
   )
 
