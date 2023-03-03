@@ -19,15 +19,13 @@ export const useNotificationStore = definePiniaStore('notification-store', () =>
       message: h(
         'div',
         [
-          message,
+          typeof message === 'string' ? h('p', message) : message,
           h(ElCheckbox, {
             label: 'Ingore this notification',
             size: 'large',
             checked: isIgnored(idx),
             onChange: (val) => {
-              if (val) {
-                ignore(idx)
-              }
+              ignore(idx, val as boolean)
             }
           })
         ]
@@ -38,7 +36,13 @@ export const useNotificationStore = definePiniaStore('notification-store', () =>
 
   const isIgnored = (idx: string) => ignoreNotifications.value.has(idx)
 
-  const ignore = (idx: string) => {
+  const ignore = (idx: string, state: boolean) => {
+    if (!state) {
+      ignoreNotifications.value.delete(idx)
+
+      return
+    }
+
     ignoreNotifications.value = ignoreNotifications.value.add(idx)
   }
 
@@ -50,7 +54,7 @@ export const useNotificationStore = definePiniaStore('notification-store', () =>
   }
 }, {
   persist: {
-    storage: localStorage,
+    storage: persistedState.localStorage,
     serializer: {
       deserialize: deserialize({ type: Array, cb: (v) => new Set(v) }),
       serialize: serialize({ type: Set, cb: (v) => [...v] })

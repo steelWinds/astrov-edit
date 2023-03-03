@@ -1,7 +1,28 @@
 <script setup lang="ts">
 import { useThemeStore } from '@/store/theme-store'
+import { useNotificationStore } from '@/store/notification-store'
+import { useFileSystemAccess } from '@vueuse/core'
 
 useThemeStore()
+
+const { isSupported: fileSystemSupported } = useFileSystemAccess({})
+
+onMounted(() => {
+  const notificationStore = useNotificationStore()
+
+  notificationStore.open(
+    'FileSystemAccess',
+    !fileSystemSupported.value,
+    {
+      message: `
+        Your browser does not support File System Access API
+        your can not create files
+      `,
+      type: 'warning',
+      duration: 999999
+    }
+  )
+})
 </script>
 
 <template>

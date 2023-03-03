@@ -130,6 +130,19 @@
   .el-menu--popup {
     padding: 0 !important;
   }
+
+  .input-select {
+    .el-input-group__append {
+      padding: 0;
+      flex-basis: 150px;
+      min-inline-size: 100px;
+    }
+
+    .el-select-v2__wrapper {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
 }
 
 @layer theme {

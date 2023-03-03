@@ -4,8 +4,8 @@
       drag
       multiple
       accept="text/*"
-      @change="filesStore.addFile"
-      @remove="filesStore.removeFile"
+      @change="addUploadFile"
+      @remove="removeUploadFile"
     >
       <el-icon
         size="60px"
@@ -28,6 +28,8 @@
 
 <script setup lang="ts">
 import { useFilesStore } from '@/store/files-store'
+import { storeToRefs } from 'pinia'
 
-const filesStore = useFilesStore()
+const { files } = storeToRefs(useFilesStore())
+const { addUploadFile, removeUploadFile } = useUploadFiles(files)
 </script>

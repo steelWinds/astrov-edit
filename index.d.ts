@@ -27,6 +27,23 @@ declare interface FontData {
   style: keyof typeof FONT_BASE_WEIGHTS;
 }
 
+declare interface Dictionary<T> {
+    [Key: string]: T;
+}
+
 interface Window {
   queryLocalFonts: () => FontData<string>[];
+}
+
+declare module 'mime-db' {
+  export interface DB {
+    source: 'iana' | 'apache' | 'nginx';
+    extensions: string[];
+    compressible: boolean;
+    charset: string;
+  }
+
+  const db: Dictionary<DB>
+
+  export default db
 }

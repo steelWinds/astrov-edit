@@ -48,6 +48,8 @@ export const useFontStore = definePiniaStore('font-store', () => {
   }
 
   const setAvailableOptions = () => {
+    console.log(currentFont.value);
+
     [
       fontTheme.availableWeight,
       fontTheme.availableStyles
@@ -66,8 +68,6 @@ export const useFontStore = definePiniaStore('font-store', () => {
     ]
   }
 
-  watch(() => fontTheme.family, setAvailableOptions)
-
   return {
     setDefaultOptions,
     setAvailableOptions,
@@ -79,5 +79,9 @@ export const useFontStore = definePiniaStore('font-store', () => {
     pendingFonts,
     localFontsSupported,
     localFontsDenied
+  }
+}, {
+  persist: {
+    storage: persistedState.localStorage
   }
 })

@@ -1,6 +1,41 @@
-<template>
-  <!--<NButtonGroup>-->
+<script setup lang="ts">
+import { useBreakpoints, useFileSystemAccess } from '@vueuse/core'
+import { OnClickOutside } from '@vueuse/components'
 
+const {
+  isSupported: fileSystemSupported
+} = useFileSystemAccess({})
+
+const options = reactive<Record<string, boolean>>({
+  file: false,
+  theme: false,
+  createFile: false
+})
+const refMenu = ref<{ close:(index: string) => any } | null>(null)
+const currentSubmenuIdx = ref('')
+const createFileName = ref('')
+const createFileExt = ref()
+
+const { exts } = await $fetch('/api/mimes')
+
+const tabletAndLarger = useBreakpoints({ tablet: 764 })
+  .greaterOrEqual('tablet')
+
+const menuTriggerType = computed<'click' | 'hover'>(
+  () => tabletAndLarger.value ? 'hover' : 'click'
+)
+const fileExtOption = computed<any>(() => exts.map(ext => ({ label: `.${ext}`, value: ext })))
+
+const onOpenSubmenu = (idx: string) => {
+  currentSubmenuIdx.value = idx
+}
+
+const closeCurrentSubmenu = () => {
+  refMenu.value?.close(currentSubmenuIdx.value)
+}
+</script>
+
+<template>
   <ClientOnly>
     <OnClickOutside @trigger="closeCurrentSubmenu">
       <el-menu
@@ -30,6 +65,8 @@
 
           <el-menu-item
             index="1-2"
+            :disabled="!fileSystemSupported"
+            @click="options.createFile = true"
           >
             New File
           </el-menu-item>
@@ -116,36 +153,34 @@
     >
       <StaticOptionsThemeOptions />
     </el-dialog>
+
+    <el-dialog
+      v-model="options.createFile"
+      align-center
+      draggable
+      append-to-body
+      class="!tw-w-5/6 !tw-max-w-xl"
+      title="File name"
+    >
+      <el-input
+        v-model="createFileName"
+        placeholder="Input file name"
+        :formatter="(value: string) => `${value}`.match(/^[\w|\s]+/gmi)"
+        class="input-select"
+      >
+        <template #append>
+          <el-select-v2
+            v-model="createFileExt"
+            :options="fileExtOption"
+            placeholder="File extension"
+            no-data-text="No extensions"
+            filterable
+          />
+        </template>
+      </el-input>
+    </el-dialog>
   </ClientOnly>
 </template>
-
-<script setup lang="ts">
-import { useBreakpoints } from '@vueuse/core'
-import { OnClickOutside } from '@vueuse/components'
-
-const options = reactive<Record<string, boolean>>({
-  file: false,
-  theme: false,
-  inputType: false
-})
-const refMenu = ref<{ close:(index: string) => any } | null>(null)
-const currentSubmenuIdx = ref('')
-
-const tabletAndLarger = useBreakpoints({ tablet: 764 })
-  .greaterOrEqual('tablet')
-
-const menuTriggerType = computed<'click' | 'hover'>(
-  () => tabletAndLarger.value ? 'hover' : 'click'
-)
-
-const onOpenSubmenu = (idx: string) => {
-  currentSubmenuIdx.value = idx
-}
-
-const closeCurrentSubmenu = () => {
-  refMenu.value?.close(currentSubmenuIdx.value)
-}
-</script>
 
 <style scoped>
 .top-panel-grid {

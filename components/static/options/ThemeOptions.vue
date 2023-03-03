@@ -34,6 +34,7 @@
             no-data-text="No families"
             value-key="value.family"
             class="tw-w-full ultra-sm:tw-w-auto loading-mask-10"
+            @change="fontStore.setAvailableOptions"
           />
         </ClientOnly>
       </el-row>
@@ -120,7 +121,6 @@ import { useFontStore } from '@/store/font-store'
 import { useNotificationStore } from '@/store/notification-store'
 import { groupBy } from 'lodash-es'
 
-const notificationStore = useNotificationStore()
 const themeStore = useThemeStore()
 const fontStore = useFontStore()
 const { isDark } = storeToRefs(themeStore)
@@ -158,12 +158,14 @@ const fontSizes = Array.from({ length: 99 }, (_, i) => ({ value: i + 2, label: i
 onMounted(async () => {
   await fontStore.getFonts()
 
+  const notificationStore = useNotificationStore()
+
   notificationStore.open(
     'local-fonts-supported',
     !localFontsSupported.value,
     {
       message: `
-        You browser don't supporting local fonts,
+        You browser does not support Local Fonts <a>API</a>,
         now you can use only fonts from Google Fonts
       `,
       type: 'warning'

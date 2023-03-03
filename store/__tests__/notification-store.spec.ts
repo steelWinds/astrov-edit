@@ -11,16 +11,22 @@ describe('Spec of pinia notification-store', () => {
     setActivePinia(createPinia())
   })
 
-  test('Called open with ignore', async () => {
+  test('Called open with ignore and without it', async () => {
     const notificationStore = useNotificationStore()
 
     const randomString = faker.datatype.string()
 
-    notificationStore.ignore(randomString)
+    notificationStore.ignore(randomString, true)
 
     notificationStore.open(randomString, true)
 
     expect(elPlusExports.ElNotification).toHaveBeenCalledTimes(0)
+
+    notificationStore.ignore(randomString, false)
+
+    notificationStore.open(randomString, true)
+
+    expect(elPlusExports.ElNotification).toHaveBeenCalledTimes(1)
   })
 
   test('Called open without ignore', async () => {
@@ -30,6 +36,6 @@ describe('Spec of pinia notification-store', () => {
 
     notificationStore.open(randomString, true)
 
-    expect(elPlusExports.ElNotification).toHaveBeenCalled()
+    expect(elPlusExports.ElNotification).toHaveBeenCalledTimes(2)
   })
 })
