@@ -81,7 +81,10 @@ export const useFontStore = definePiniaStore('font-store', () => {
     localFontsDenied
   }
 }, {
-  persist: {
-    storage: persistedState.localStorage
-  }
+  persist: [
+    {
+      paths: ['fontTheme'],
+      storage: persistedState.localStorage
+    }
+  ]
 })

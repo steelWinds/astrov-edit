@@ -22,6 +22,8 @@ export const useLocalFonts = () => {
 
       localFonts.value = parseLocalFonts(availableFonts)
     } catch (err) {
+      console.log(err)
+
       toggleDenied(true)
     } finally {
       togglePending(false)

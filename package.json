@@ -19,11 +19,13 @@
     "element-plus": "^2.2.32",
     "eslint-config-standard-with-typescript": "^34.0.0",
     "eslint-plugin-jsx-a11y": "^6.7.1",
+    "file-system-access": "^1.0.4",
     "lodash-es": "^4.17.21",
     "mime-db": "^1.52.0",
     "pinia": "^2.0.32",
     "pinia-plugin-persistedstate": "^3.1.0",
-    "ufo": "^1.1.1"
+    "ufo": "^1.1.1",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@element-plus/nuxt": "^1.0.3",
@@ -35,6 +37,7 @@
     "@pinia/testing": "^0.0.15",
     "@types/google.fonts": "^1.0.3",
     "@types/lodash-es": "^4.17.6",
+    "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.54.0",
     "@vicons/fluent": "^0.12.0",
     "@vicons/material": "^0.12.0",

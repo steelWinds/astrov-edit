@@ -121,6 +121,11 @@
       backdrop-filter: blur(var(--bcd-base));
       z-index: -1000;
     }
+
+    .el-loading-spinner {
+      margin-top: 0 !important;
+      transform: translateY(-50%);
+    }
   }
 
   .el-divider {
@@ -136,6 +141,7 @@
       padding: 0;
       flex-basis: 150px;
       min-inline-size: 100px;
+      background-color: transparent;
     }
 
     .el-select-v2__wrapper {
@@ -157,6 +163,10 @@
       --el-menu-hover-bg-color: var(--c-black);
       --el-color-primary: var(--c-orange);
       --el-text-color-regular: var(--c-white);
+
+      .input-select {
+        --el-input-bg-color: var(--c-black-a-015);
+      }
 
       .el-button {
         --el-button-bg-color: var(--c-mint);
@@ -239,11 +249,7 @@
       }
 
       .el-select-v2 {
-        --el-fill-color-blank: var(--c-black-a-015);
-
-        .el-select-v2__placeholder {
-          color: var(--c-white)
-        }
+        --el-fill-color-blank: var(--c-black-a-015) !important;
 
         .el-select-v2__combobox-input {
           --el-text-color-regular: var(--c-white);

@@ -1,22 +1,16 @@
 <script setup lang="ts">
-import { useBreakpoints, useFileSystemAccess } from '@vueuse/core'
+import { useBreakpoints } from '@vueuse/core'
 import { OnClickOutside } from '@vueuse/components'
+import { useFilesStore } from '@/store/files-store'
 
-const {
-  isSupported: fileSystemSupported
-} = useFileSystemAccess({})
+const filesStore = useFilesStore()
 
 const options = reactive<Record<string, boolean>>({
-  file: false,
   theme: false,
   createFile: false
 })
 const refMenu = ref<{ close:(index: string) => any } | null>(null)
 const currentSubmenuIdx = ref('')
-const createFileName = ref('')
-const createFileExt = ref()
-
-const { exts } = await $fetch('/api/mimes')
 
 const tabletAndLarger = useBreakpoints({ tablet: 764 })
   .greaterOrEqual('tablet')
@@ -24,7 +18,6 @@ const tabletAndLarger = useBreakpoints({ tablet: 764 })
 const menuTriggerType = computed<'click' | 'hover'>(
   () => tabletAndLarger.value ? 'hover' : 'click'
 )
-const fileExtOption = computed<any>(() => exts.map(ext => ({ label: `.${ext}`, value: ext })))
 
 const onOpenSubmenu = (idx: string) => {
   currentSubmenuIdx.value = idx
@@ -33,6 +26,10 @@ const onOpenSubmenu = (idx: string) => {
 const closeCurrentSubmenu = () => {
   refMenu.value?.close(currentSubmenuIdx.value)
 }
+
+const openFile = elMessage(filesStore.openFile, {
+  failed: { message: 'Denied opened file', type: 'error' }
+})
 </script>
 
 <template>
@@ -56,7 +53,7 @@ const closeCurrentSubmenu = () => {
 
           <el-menu-item
             index="1-1"
-            @click="options.file = true"
+            @click="openFile"
           >
             Open File
           </el-menu-item>
@@ -65,7 +62,6 @@ const closeCurrentSubmenu = () => {
 
           <el-menu-item
             index="1-2"
-            :disabled="!fileSystemSupported"
             @click="options.createFile = true"
           >
             New File
@@ -133,17 +129,6 @@ const closeCurrentSubmenu = () => {
 
   <ClientOnly>
     <el-dialog
-      v-model="options.file"
-      align-center
-      draggable
-      append-to-body
-      class="!tw-w-5/6 !tw-max-w-xl"
-      title="Open File"
-    >
-      <StaticOptionsFileOptions />
-    </el-dialog>
-
-    <el-dialog
       v-model="options.theme"
       align-center
       draggable
@@ -156,28 +141,12 @@ const closeCurrentSubmenu = () => {
 
     <el-dialog
       v-model="options.createFile"
-      align-center
       draggable
       append-to-body
       class="!tw-w-5/6 !tw-max-w-xl"
       title="File name"
     >
-      <el-input
-        v-model="createFileName"
-        placeholder="Input file name"
-        :formatter="(value: string) => `${value}`.match(/^[\w|\s]+/gmi)"
-        class="input-select"
-      >
-        <template #append>
-          <el-select-v2
-            v-model="createFileExt"
-            :options="fileExtOption"
-            placeholder="File extension"
-            no-data-text="No extensions"
-            filterable
-          />
-        </template>
-      </el-input>
+      <FormsCreateFileForm />
     </el-dialog>
   </ClientOnly>
 </template>
