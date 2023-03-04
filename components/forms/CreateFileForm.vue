@@ -11,19 +11,20 @@ const form = reactive({
 
 const { data, pending: pendingFileExts } = await useLazyFetch('/api/mimes')
 
-const fullFileName = computed(() => `${form.fileName}${form.fileExt}`)
+const fullFileName = computed(() => `${form.fileName}${form.fileExt ?? ''}`)
 const fileExt = computed(() => data.value?.exts.map(e => `.${e}`) ?? [])
 const fileExtOption = computed<any>(() => fileExt.value
   .map(ext => ({ label: ext, value: ext })))
 
+const formatFileName = (value: string) => `${value}`.match(/^[\w|\s]+/gmi)
 const createFile = () => {
   filesStore.createFile({
     suggestedName: fullFileName.value,
     types: [
       {
-        description: 'Text files',
+        description: 'Text file',
         accept: {
-          'text/*': fileExt.value
+          'text/*': [form.fileExt ?? fileExt.value].flat()
         }
       }
     ]
@@ -35,15 +36,14 @@ const createFile = () => {
   <el-form
     :model="form"
     v-bind="attrs"
-    @submit="createFile"
-    @keyup.enter="createFile"
   >
     <el-form-item>
       <el-input
         v-model="form.fileName"
         placeholder="Input file name"
-        :formatter="(value: string) => `${value}`.match(/^[\w|\s]+/gmi)"
+        :formatter="formatFileName"
         class="input-select"
+        @keyup.enter.self="createFile"
       >
         <template #append>
           <el-select-v2
@@ -51,6 +51,7 @@ const createFile = () => {
             v-loading="pendingFileExts"
             :disabled="pendingFileExts"
             :options="fileExtOption"
+            autocomplete="inline"
             placeholder="File extension"
             no-data-text="No extensions"
             filterable
@@ -63,6 +64,7 @@ const createFile = () => {
     <el-form-item>
       <el-button
         class="tw-self-end tw-mt-3 tw-bg-mint tw-text-white tw-ml-auto"
+        @click="createFile"
       >
         Create file
       </el-button>

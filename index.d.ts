@@ -8,6 +8,8 @@ declare type FontWeightsValues = typeof FONT_BASE_WEIGHTS[FontWeightsKeys]
 declare type FontStyles = typeof FONT_BASE_STYLES[number]
 declare type AvailableFontWords = FontWeightsKeys | FontStyles
 
+declare type MapPromise<T> = (value: T, index: number, array: T[]) => Promise<any>
+
 declare interface LocalFamily {
   family: string;
   variants: string[];

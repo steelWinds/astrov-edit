@@ -1,11 +1,9 @@
-import type { UseFileSystemAccessReturn } from '@vueuse/core'
 import type { CustomSaveFilePickerOptions } from 'file-system-access/lib/showSaveFilePicker'
 
 import { showOpenFilePicker, showSaveFilePicker } from 'file-system-access'
 
 import { v4 as uuidv4 } from 'uuid'
 export interface FileUnit {
-  file: File;
   fileHandle: FileSystemFileHandle
 }
 
@@ -19,27 +17,22 @@ export const useFilesStore = definePiniaStore('files-store', () => {
   const openFile = async () => {
     const fileHandles = await showOpenFilePicker({ multiple: true })
 
-    const files = await Promise.allSettled(fileHandles.map(fh => fh.getFile()))
-
-    files.forEach((f, idx) => {
-      if (f.status === 'fulfilled') {
-        addFile({ file: f.value, fileHandle: fileHandles[idx] })
-      }
-
-      // TODO: add catch error handler
+    fileHandles.forEach((fileHandle) => {
+      addFile({ fileHandle })
     })
   }
 
   const createFile = async (options: CustomSaveFilePickerOptions = {}) => {
     const fileHandle = await showSaveFilePicker(options)
 
-    const file = await fileHandle.getFile()
-
-    addFile({ file, fileHandle })
+    addFile({ fileHandle })
   }
 
-  const addFile = (file: FileUnit) => {
-    const fileIsExist = filesList.value.some(fu => fu.fileHandle.isSameEntry(file.fileHandle))
+  const addFile = async (file: FileUnit) => {
+    const fileIsExist = await asyncSome(
+      filesList.value,
+      async fu => fu.fileHandle.isSameEntry(file.fileHandle)
+    )
 
     if (fileIsExist) return
 
