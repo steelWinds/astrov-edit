@@ -58,10 +58,16 @@ const openFile = elMessage(filesStore.openFile, {
             Open File
           </el-menu-item>
 
+          <el-menu-item
+            index="1-2"
+          >
+            Open Folder
+          </el-menu-item>
+
           <el-divider class="tw-my-1" />
 
           <el-menu-item
-            index="1-2"
+            index="1-3"
             @click="options.createFile = true"
           >
             New File
@@ -69,17 +75,17 @@ const openFile = elMessage(filesStore.openFile, {
 
           <el-divider class="tw-my-1" />
 
-          <el-menu-item index="1-3">
+          <el-menu-item index="1-4">
             Save
           </el-menu-item>
 
-          <el-menu-item index="1-4">
+          <el-menu-item index="1-5">
             Save As
           </el-menu-item>
 
           <el-divider class="tw-my-1" />
 
-          <el-menu-item index="1-5">
+          <el-menu-item index="1-6">
             Change File Type
           </el-menu-item>
         </el-sub-menu>

@@ -17,8 +17,8 @@ const fileExtOption = computed<any>(() => fileExt.value
   .map(ext => ({ label: ext, value: ext })))
 
 const formatFileName = (value: string) => `${value}`.match(/^[\w|\s]+/gmi)
-const createFile = () => {
-  filesStore.createFile({
+const createFile = elMessage(() => {
+  return filesStore.createFile({
     suggestedName: fullFileName.value,
     types: [
       {
@@ -29,7 +29,10 @@ const createFile = () => {
       }
     ]
   })
-}
+}, {
+  success: { message: 'File added successfully', type: 'success' },
+  failed: { message: 'File added denied', type: 'error' }
+})
 </script>
 
 <template>
@@ -43,6 +46,7 @@ const createFile = () => {
         placeholder="Input file name"
         :formatter="formatFileName"
         class="input-select"
+        clearable
         @keyup.enter.self="createFile"
       >
         <template #append>
@@ -55,6 +59,7 @@ const createFile = () => {
             placeholder="File extension"
             no-data-text="No extensions"
             filterable
+            clearable
             class="loading-mask-10"
           />
         </template>
