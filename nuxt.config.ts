@@ -1,5 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+const DEV = process.env.NODE_ENV === 'development'
+
 export default defineNuxtConfig({
+  vite: {
+    esbuild: {
+      drop: DEV ? [] : ['console', 'debugger']
+    }
+  },
   imports: {
     dirs: [
       'utils/**'

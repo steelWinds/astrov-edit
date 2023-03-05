@@ -18,30 +18,20 @@ export const useFilesStore = definePiniaStore('files-store', () => {
     const fileHandles = await showOpenFilePicker({ multiple: true })
 
     fileHandles.forEach((fileHandle) => {
-      const fileUnit = markRaw(new FileUnit(fileHandle, 'uploading'))
-
-      addFile(fileUnit)
+      addFile(markRaw(new FileUnit(fileHandle, 'uploading')))
     })
   }
 
   const createFile = async (options: CustomSaveFilePickerOptions = {}) => {
     const fileHandle = await showSaveFilePicker(options)
 
-    const fileUnit = markRaw(new FileUnit(fileHandle, 'saving'))
-
-    addFile(fileUnit)
+    addFile(markRaw(new FileUnit(fileHandle, 'saving')))
   }
 
   const addFile = async (file: FileUnit) => {
-    const fileIsExist = await file.isSameEntry(filesList.value)
+    if (await file.isSameEntry(filesList.value)) return
 
-    if (fileIsExist) return
-
-    const uuid = uuidv4()
-
-    files.value.set(uuid, file)
-
-    console.log(files.value)
+    files.value.set(uuidv4(), file)
   }
 
   const removeFile = (uuid: string) => files.value.delete(uuid)
