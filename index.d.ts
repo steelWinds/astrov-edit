@@ -33,18 +33,18 @@ declare interface Dictionary<T> {
     [Key: string]: T;
 }
 
+declare interface DB {
+  source: 'iana' | 'apache' | 'nginx';
+  extensions: string[];
+  compressible: boolean;
+  charset: string;
+}
+
 interface Window {
   queryLocalFonts: () => FontData<string>[];
 }
 
 declare module 'mime-db' {
-  export interface DB {
-    source: 'iana' | 'apache' | 'nginx';
-    extensions: string[];
-    compressible: boolean;
-    charset: string;
-  }
-
   const db: Dictionary<DB>
 
   export default db

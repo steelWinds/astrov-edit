@@ -2,8 +2,10 @@
 import { useBreakpoints } from '@vueuse/core'
 import { OnClickOutside } from '@vueuse/components'
 import { useFilesStore } from '@/store/files-store'
+import { useMimesStore } from '@/store/mimes-store'
 
 const filesStore = useFilesStore()
+const mimesStore = useMimesStore()
 
 const options = reactive<Record<string, boolean>>({
   theme: false,
@@ -27,7 +29,19 @@ const closeCurrentSubmenu = () => {
   refMenu.value?.close(currentSubmenuIdx.value)
 }
 
-const openFile = elMessage(filesStore.openFile, {
+const openFile = elMessage(async () => {
+  filesStore.openFile({
+    multiple: true,
+    types: [
+      {
+        description: 'Text file',
+        accept: {
+          'text/*': mimesStore.mimes
+        }
+      }
+    ]
+  })
+}, {
   failed: { message: 'Denied opened file', type: 'error' }
 })
 </script>
@@ -59,6 +73,7 @@ const openFile = elMessage(filesStore.openFile, {
           </el-menu-item>
 
           <el-menu-item
+            v-if="!filesStore.isLegacyMode"
             index="1-2"
           >
             Open Folder
@@ -79,7 +94,10 @@ const openFile = elMessage(filesStore.openFile, {
             Save
           </el-menu-item>
 
-          <el-menu-item index="1-5">
+          <el-menu-item
+            v-if="!filesStore.isLegacyMode"
+            index="1-5"
+          >
             Save As
           </el-menu-item>
 

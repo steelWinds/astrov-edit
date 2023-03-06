@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { useFilesStore } from '@/store/files-store'
+import { useMimesStore } from '@/store/mimes-store'
 
 const filesStore = useFilesStore()
+const mimesStore = useMimesStore()
+
 const attrs = useAttrs()
 
 const form = reactive({
@@ -9,12 +12,9 @@ const form = reactive({
   fileExt: null
 })
 
-const { data, pending: pendingFileExts } = await useLazyFetch('/api/mimes')
-
 const fullFileName = computed(() => `${form.fileName}${form.fileExt ?? ''}`)
-const fileExt = computed(() => data.value?.exts.map(e => `.${e}`) ?? [])
-const fileExtOption = computed<any>(() => fileExt.value
-  .map(ext => ({ label: ext, value: ext })))
+const fileExtOption = computed<any>(() => mimesStore.mimes
+  .map(ext => ({ label: ext, value: ext })) ?? [])
 
 const formatFileName = (value: string) => `${value}`.match(/^[\w|\s]+/gmi)
 const createFile = elMessage(() => {
@@ -24,7 +24,7 @@ const createFile = elMessage(() => {
       {
         description: 'Text file',
         accept: {
-          'text/*': [form.fileExt ?? fileExt.value].flat()
+          'text/*': form.fileExt ? [form.fileExt] : mimesStore.mimes
         }
       }
     ]
@@ -52,8 +52,6 @@ const createFile = elMessage(() => {
         <template #append>
           <el-select-v2
             v-model="form.fileExt"
-            v-loading="pendingFileExts"
-            :disabled="pendingFileExts"
             :options="fileExtOption"
             autocomplete="inline"
             placeholder="File extension"

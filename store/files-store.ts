@@ -1,4 +1,6 @@
 import type { CustomSaveFilePickerOptions } from 'file-system-access/lib/showSaveFilePicker'
+import type { CustomOpenFilePickerOptions } from 'file-system-access/lib/showOpenFilePicker'
+import type { WriteChunk } from 'file-system-access/lib/interfaces'
 import type { IFileUnit } from '@/utils/classes/FileUnit'
 
 import FileUnit from '@/utils/classes/FileUnit'
@@ -10,12 +12,29 @@ export type FileMap = Map<string, IFileUnit>
 
 export const useFilesStore = definePiniaStore('files-store', () => {
   const files = ref<FileMap>(new Map())
-  const { isSupported: isLegacyMode } = useFileSystemAccess({})
+  const { isSupported } = useFileSystemAccess({})
 
+  const isLegacyMode = computed(() => !isSupported.value)
   const filesList = computed(() => Array.from(files.value.values()))
 
-  const openFile = async () => {
-    const fileHandles = await showOpenFilePicker({ multiple: true })
+  const verifyPermission = async (fileHandle: FileSystemFileHandle) => {
+    const opts: FileSystemHandlePermissionDescriptor = {
+      mode: 'readwrite'
+    }
+
+    if ((await fileHandle.queryPermission(opts)) === 'granted') {
+      return true
+    }
+
+    if ((await fileHandle.requestPermission(opts)) === 'granted') {
+      return true
+    }
+
+    return false
+  }
+
+  const openFile = async (options: CustomOpenFilePickerOptions = {}) => {
+    const fileHandles = await showOpenFilePicker(options)
 
     fileHandles.forEach((fileHandle) => {
       addFile(markRaw(new FileUnit(fileHandle, 'uploading')))
@@ -28,10 +47,19 @@ export const useFilesStore = definePiniaStore('files-store', () => {
     addFile(markRaw(new FileUnit(fileHandle, 'saving')))
   }
 
-  const addFile = async (file: FileUnit) => {
-    if (await file.isSameEntry(filesList.value)) return
+  const addFile = async (fileUnit: FileUnit) => {
+    if (await fileUnit.isSameEntry(filesList.value)) return
 
-    files.value.set(uuidv4(), file)
+    files.value.set(uuidv4(), fileUnit)
+  }
+
+  // TODO: crete save and save-as functions
+  const save = async (fileUnit: IFileUnit, data: WriteChunk) => {
+    if (!(await verifyPermission(fileUnit.handler))) throw new Error('User denied access to file')
+
+    const writable = await fileUnit.handler.createWritable()
+
+    writable.write(data)
   }
 
   const removeFile = (uuid: string) => files.value.delete(uuid)
