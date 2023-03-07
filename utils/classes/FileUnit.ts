@@ -1,4 +1,7 @@
 import type { FileSystemFileHandle } from 'file-system-access'
+import type { DataUnit } from '@/store/files-store'
+
+import DirectoryUnit from '@/utils/classes/DirectoryUnit'
 
 type FileSourceType = 'saving' | 'uploading'
 
@@ -7,7 +10,7 @@ export interface IFileUnit {
   getText: (legacy: boolean) => Promise<string>;
   getFile: (legacy: boolean) => Promise<string | File>;
   isSameEntry: (
-    entries: IFileUnit | IFileUnit[]
+    entries: DataUnit | DataUnit[]
   ) => Promise<boolean>;
 }
 
@@ -42,11 +45,15 @@ export default class FileUnit implements IFileUnit {
     return typeof fileData === 'string' ? fileData : fileData.text()
   }
 
-  isSameEntry (entries: IFileUnit | IFileUnit[]): Promise<boolean> {
+  async isSameEntry (entries: DataUnit | DataUnit[]): Promise<boolean> {
     if (entries instanceof Array) {
       return asyncSome(entries, async fu => this.isSameEntry(fu))
+    } else if (entries instanceof DirectoryUnit) {
+      const tree = await entries.getTree()
+
+      return this.isSameEntry(tree.files)
     }
 
-    return this.handler.isSameEntry(entries.handler)
+    return this.handler.isSameEntry((entries as IFileUnit).handler)
   }
 }

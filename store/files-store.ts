@@ -1,5 +1,6 @@
 import type { WriteChunk } from 'file-system-access/lib/interfaces'
 import type { IFileUnit } from '@/utils/classes/FileUnit'
+import type { IDirectoryUnit } from '@/utils/classes/DirectoryUnit'
 
 import FileUnit from '@/utils/classes/FileUnit'
 import DirectoryUnit from '@/utils/classes/DirectoryUnit'
@@ -8,18 +9,19 @@ import { v4 as uuidv4 } from 'uuid'
 import { useFileSystemAccess } from '@vueuse/core'
 import { useMimesStore } from '@/store/mimes-store'
 
-export type FileMap = Map<string, IFileUnit>
+export type DataUnit = IFileUnit | IDirectoryUnit
+export type UnitMap = Map<string, DataUnit>
 
 export const useFilesStore = definePiniaStore('files-store', () => {
   const mimesStore = useMimesStore()
 
-  const files = ref<FileMap>(new Map())
+  const units = ref<UnitMap>(new Map())
   const currentFileUnitUUID = ref<string>()
   const { isSupported } = useFileSystemAccess({})
 
   const isLegacyMode = computed(() => !isSupported.value)
-  const filesList = computed(() => Array.from(files.value.values()))
-  const currentFileUnit = computed(() => files.value.get(currentFileUnitUUID.value ?? ''))
+  const unitsList = computed(() => Array.from(units.value.values()))
+  const currentFileUnit = computed(() => units.value.get(currentFileUnitUUID.value ?? ''))
 
   // This internal function, so i just throw an error when user denied permission to file
   const verifyPermission = async (fileHandle: FileSystemFileHandle) => {
@@ -35,14 +37,14 @@ export const useFilesStore = definePiniaStore('files-store', () => {
     }
   }
 
-  const addFile = async (fileUnit: FileUnit) => {
-    if (await fileUnit.isSameEntry(filesList.value)) {
+  const addUnit = async <T extends FileUnit | IDirectoryUnit>(unit: T) => {
+    if (unit instanceof FileUnit && await unit.isSameEntry(unitsList.value)) {
       throw new Error('It\'s same file')
     }
 
-    files.value.set(uuidv4(), fileUnit)
+    units.value.set(uuidv4(), unit)
 
-    return fileUnit
+    return unit
   }
 
   const openFile = async () => {
@@ -58,9 +60,9 @@ export const useFilesStore = definePiniaStore('files-store', () => {
       ]
     })
 
-    fileHandles.forEach((fileHandle) => {
-      addFile(markRaw(new FileUnit(fileHandle, 'uploading')))
-    })
+    for (const handle of fileHandles) {
+      await addUnit(markRaw(new FileUnit(handle, 'uploading')))
+    }
   }
 
   const openDir = async () => {
@@ -72,9 +74,7 @@ export const useFilesStore = definePiniaStore('files-store', () => {
 
     const dirUnit = new DirectoryUnit(dirHandle)
 
-    const tree = await dirUnit.getTree()
-
-    console.log(tree)
+    addUnit(markRaw(dirUnit))
   }
 
   const createFile = async (fileName: string, fileExt?: string | null) => {
@@ -90,7 +90,7 @@ export const useFilesStore = definePiniaStore('files-store', () => {
       ]
     })
 
-    return addFile(markRaw(new FileUnit(fileHandle, 'saving')))
+    return addUnit(markRaw(new FileUnit(fileHandle, 'saving')))
   }
 
   const save = async (fileUnit: IFileUnit, data: WriteChunk) => {
@@ -111,12 +111,12 @@ export const useFilesStore = definePiniaStore('files-store', () => {
     await save(fileUnit, fileContents)
   }
 
-  const removeFile = (uuid: string) => files.value.delete(uuid)
+  const removeFile = (uuid: string) => units.value.delete(uuid)
 
-  const clearFiles = () => files.value.clear()
+  const clearFiles = () => units.value.clear()
 
   return {
-    files,
+    units,
     isLegacyMode,
     currentFileUnit,
     currentFileUnitUUID,

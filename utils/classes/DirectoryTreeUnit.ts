@@ -2,6 +2,8 @@ import type { IFileUnit } from '@/utils/classes/FileUnit'
 
 export interface IDirectoryTreeUnit {
   name: string;
+  files: IFileUnit[];
+  nested: IDirectoryTreeUnit[];
 
   addFile(unit: IFileUnit): void;
   addNested(unit: IDirectoryTreeUnit): void;
@@ -15,6 +17,14 @@ export default class DirectoryTreeUnit implements IDirectoryTreeUnit {
 
   constructor (name: string) {
     this.name = name
+  }
+
+  get files () {
+    return this.#files
+  }
+
+  get nested () {
+    return this.#nested
   }
 
   addFile (unit: IFileUnit) {
