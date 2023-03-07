@@ -28,8 +28,12 @@ const closeCurrentSubmenu = () => {
 }
 
 const openFile = elMessage(async () => {
-  filesStore.openFile()
-}, { failed: 'Unhandled error, try again' })
+  await filesStore.openFile()
+}, { success: 'Opened file succesfully' })
+
+const openDir = elMessage(async () => {
+  await filesStore.openDir()
+}, { success: 'Opened folder succesfully' })
 </script>
 
 <template>
@@ -59,8 +63,8 @@ const openFile = elMessage(async () => {
           </el-menu-item>
 
           <el-menu-item
-            v-if="!filesStore.isLegacyMode"
             index="1-2"
+            @click="openDir"
           >
             Open Folder
           </el-menu-item>

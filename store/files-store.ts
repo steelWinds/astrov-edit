@@ -2,7 +2,8 @@ import type { WriteChunk } from 'file-system-access/lib/interfaces'
 import type { IFileUnit } from '@/utils/classes/FileUnit'
 
 import FileUnit from '@/utils/classes/FileUnit'
-import { showOpenFilePicker, showSaveFilePicker } from 'file-system-access'
+import DirectoryUnit from '@/utils/classes/DirectoryUnit'
+import { showOpenFilePicker, showSaveFilePicker, showDirectoryPicker } from 'file-system-access'
 import { v4 as uuidv4 } from 'uuid'
 import { useFileSystemAccess } from '@vueuse/core'
 import { useMimesStore } from '@/store/mimes-store'
@@ -13,10 +14,12 @@ export const useFilesStore = definePiniaStore('files-store', () => {
   const mimesStore = useMimesStore()
 
   const files = ref<FileMap>(new Map())
+  const currentFileUnitUUID = ref<string>()
   const { isSupported } = useFileSystemAccess({})
 
   const isLegacyMode = computed(() => !isSupported.value)
   const filesList = computed(() => Array.from(files.value.values()))
+  const currentFileUnit = computed(() => files.value.get(currentFileUnitUUID.value ?? ''))
 
   // This internal function, so i just throw an error when user denied permission to file
   const verifyPermission = async (fileHandle: FileSystemFileHandle) => {
@@ -62,6 +65,20 @@ export const useFilesStore = definePiniaStore('files-store', () => {
     })
   }
 
+  const openDir = async () => {
+    const dirHandle = await showDirectoryPicker({
+      id: 'uploading',
+      mode: 'readwrite',
+      startIn: 'desktop'
+    } as any)
+
+    const dirUnit = new DirectoryUnit(dirHandle)
+
+    const tree = await dirUnit.getTree()
+
+    console.log(tree)
+  }
+
   const createFile = async (fileName: string, fileExt?: string | null) => {
     const fileHandle = await showSaveFilePicker({
       suggestedName: fileName,
@@ -103,11 +120,14 @@ export const useFilesStore = definePiniaStore('files-store', () => {
   return {
     files,
     isLegacyMode,
+    currentFileUnit,
+    currentFileUnitUUID,
     openFile,
     createFile,
     removeFile,
     clearFiles,
     save,
-    saveAs
+    saveAs,
+    openDir
   }
 })

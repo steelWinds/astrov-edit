@@ -12,8 +12,9 @@ export interface IFileUnit {
 }
 
 export default class FileUnit implements IFileUnit {
-  #fileHandler: FileSystemFileHandle
-  #fileSourceType: FileSourceType
+  readonly #fileHandler: FileSystemFileHandle
+  readonly #fileSourceType: FileSourceType
+
   #fileData: string
 
   constructor (

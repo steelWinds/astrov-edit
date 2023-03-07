@@ -20,12 +20,10 @@ export const elMessage = (fn: (...args: any) => any, params: Params) => {
         })
       }
     } catch (err: any) {
-      if (failed) {
-        ElMessage({
-          message: err.message ?? failed ?? 'Unhandled error, try again',
-          type: 'error'
-        })
-      }
+      ElMessage({
+        message: err.message ?? failed ?? 'Unhandled error, try again',
+        type: 'error'
+      })
     }
   }
 }
