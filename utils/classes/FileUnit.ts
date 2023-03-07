@@ -4,7 +4,8 @@ type FileSourceType = 'saving' | 'uploading'
 
 export interface IFileUnit {
   handler: FileSystemFileHandle;
-  getFile: (legacy: boolean) => Promise<File | string>;
+  getText: (legacy: boolean) => Promise<string>;
+  getFile: (legacy: boolean) => Promise<string | File>;
   isSameEntry: (
     entries: IFileUnit | IFileUnit[]
   ) => Promise<boolean>;
@@ -13,7 +14,7 @@ export interface IFileUnit {
 export default class FileUnit implements IFileUnit {
   #fileHandler: FileSystemFileHandle
   #fileSourceType: FileSourceType
-  #fileData?: string
+  #fileData: string
 
   constructor (
     fileHander: FileSystemFileHandle,
@@ -29,11 +30,15 @@ export default class FileUnit implements IFileUnit {
   }
 
   async getFile (legacy: boolean) {
-    if (legacy && this.#fileSourceType !== 'uploading') {
-      return this.#fileData!
-    }
+    const isLegacyGetFile = legacy && this.#fileSourceType !== 'uploading'
 
-    return this.#fileHandler.getFile()
+    return isLegacyGetFile ? this.#fileData! : this.#fileHandler.getFile()
+  }
+
+  async getText (legacy: boolean) {
+    const fileData = await this.getFile(legacy)
+
+    return typeof fileData === 'string' ? fileData : fileData.text()
   }
 
   isSameEntry (entries: IFileUnit | IFileUnit[]): Promise<boolean> {

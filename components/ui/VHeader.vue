@@ -2,10 +2,8 @@
 import { useBreakpoints } from '@vueuse/core'
 import { OnClickOutside } from '@vueuse/components'
 import { useFilesStore } from '@/store/files-store'
-import { useMimesStore } from '@/store/mimes-store'
 
 const filesStore = useFilesStore()
-const mimesStore = useMimesStore()
 
 const options = reactive<Record<string, boolean>>({
   theme: false,
@@ -30,20 +28,8 @@ const closeCurrentSubmenu = () => {
 }
 
 const openFile = elMessage(async () => {
-  filesStore.openFile({
-    multiple: true,
-    types: [
-      {
-        description: 'Text file',
-        accept: {
-          'text/*': mimesStore.mimes
-        }
-      }
-    ]
-  })
-}, {
-  failed: { message: 'Denied opened file', type: 'error' }
-})
+  filesStore.openFile()
+}, { failed: 'Unhandled error, try again' })
 </script>
 
 <template>

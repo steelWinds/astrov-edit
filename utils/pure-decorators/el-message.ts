@@ -1,8 +1,10 @@
-import type { MessageParams } from 'element-plus/lib/components/message/src/message'
+import { MessageOptions } from 'element-plus/lib/components/message/src/message'
+
+type Message = MessageOptions['message']
 
 interface Params {
-  success?: MessageParams;
-  failed?: MessageParams;
+  success?: Message;
+  failed?: Message;
 }
 
 export const elMessage = (fn: (...args: any) => any, params: Params) => {
@@ -12,9 +14,18 @@ export const elMessage = (fn: (...args: any) => any, params: Params) => {
     try {
       await fn.apply(this, args)
 
-      if (success) ElMessage(success)
-    } catch {
-      if (failed) ElMessage(failed)
+      if (success) {
+        ElMessage({
+          message: success, type: 'success'
+        })
+      }
+    } catch (err: any) {
+      if (failed) {
+        ElMessage({
+          message: err.message ?? failed ?? 'Unhandled error, try again',
+          type: 'error'
+        })
+      }
     }
   }
 }

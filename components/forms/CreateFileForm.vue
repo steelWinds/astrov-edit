@@ -7,32 +7,23 @@ const mimesStore = useMimesStore()
 
 const attrs = useAttrs()
 
-const form = reactive({
+interface FormType {
+  fileName: string;
+  fileExt?: string | null;
+}
+
+const form = reactive<FormType>({
   fileName: '',
   fileExt: null
 })
 
-const fullFileName = computed(() => `${form.fileName}${form.fileExt ?? ''}`)
 const fileExtOption = computed<any>(() => mimesStore.mimes
   .map(ext => ({ label: ext, value: ext })) ?? [])
 
 const formatFileName = (value: string) => `${value}`.match(/^[\w|\s]+/gmi)
 const createFile = elMessage(() => {
-  return filesStore.createFile({
-    suggestedName: fullFileName.value,
-    types: [
-      {
-        description: 'Text file',
-        accept: {
-          'text/*': form.fileExt ? [form.fileExt] : mimesStore.mimes
-        }
-      }
-    ]
-  })
-}, {
-  success: { message: 'File added successfully', type: 'success' },
-  failed: { message: 'File added denied', type: 'error' }
-})
+  return filesStore.createFile(form.fileName, form.fileExt)
+}, { success: 'File added successfully' })
 </script>
 
 <template>
