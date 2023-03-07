@@ -40,9 +40,7 @@ export const useFilesStore = definePiniaStore('files-store', () => {
       throw new Error('It\'s same file')
     }
 
-    const uuid = uuidv4()
-
-    files.value.set(uuid, fileUnit)
+    files.value.set(uuidv4(), fileUnit)
 
     return fileUnit
   }
