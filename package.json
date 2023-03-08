@@ -55,7 +55,7 @@
     "eslint-plugin-vue": "^9.9.0",
     "happy-dom": "^8.9.0",
     "nuxt": "^3.2.3",
-    "nuxt-vitest": "^0.6.6",
+    "nuxt-vitest": "^0.6.7",
     "postcss": "^8.4.21",
     "postcss-lab-function": "^5.1.0",
     "postcss-nesting": "^11.2.1",
