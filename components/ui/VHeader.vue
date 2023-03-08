@@ -2,8 +2,10 @@
 import { useBreakpoints } from '@vueuse/core'
 import { OnClickOutside } from '@vueuse/components'
 import { useFilesStore } from '@/store/files-store'
+import { useThemeStore } from '@/store/theme-store'
 
 const filesStore = useFilesStore()
+const themeStore = useThemeStore()
 
 const options = reactive<Record<string, boolean>>({
   theme: false,
@@ -80,22 +82,31 @@ const openDir = elMessage(async () => {
 
           <el-divider class="tw-my-1" />
 
-          <el-menu-item index="1-4">
-            Save
-          </el-menu-item>
-
-          <el-menu-item
-            v-if="!filesStore.isLegacyMode"
-            index="1-5"
+          <el-tooltip
+            content="Cannot file exist"
+            :effect="themeStore.isDark ? 'dark' : 'light'"
+            :placement="tabletAndLarger ? 'right' : 'top-end'"
+            :disabled="filesStore.currentEditFileExist"
           >
-            Save As
-          </el-menu-item>
+            <template #default>
+              <el-menu-item-group>
+                <el-menu-item
+                  index="1-4"
+                  :disabled="!filesStore.currentEditFileExist"
+                >
+                  Save
+                </el-menu-item>
 
-          <el-divider class="tw-my-1" />
-
-          <el-menu-item index="1-6">
-            Change File Type
-          </el-menu-item>
+                <el-menu-item
+                  v-if="!filesStore.isLegacyMode"
+                  index="1-5"
+                  :disabled="!filesStore.currentEditFileExist"
+                >
+                  Save As
+                </el-menu-item>
+              </el-menu-item-group>
+            </template>
+          </el-tooltip>
         </el-sub-menu>
 
         <el-sub-menu

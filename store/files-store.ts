@@ -21,6 +21,7 @@ export const useFilesStore = definePiniaStore('files-store', () => {
   const isLegacyMode = computed(() => !isSupported.value)
   const unitsList = computed(() => Array.from(units.value.values()))
   const currentFileUnit = computed(() => units.value.get(currentFileUnitUUID.value ?? ''))
+  const currentEditFileExist = computed(() => Boolean(currentFileUnit.value))
 
   // This internal function, so i just throw an error when user denied permission to file
   const verifyPermission = async (fileHandle: FileSystemFileHandle) => {
@@ -140,6 +141,7 @@ export const useFilesStore = definePiniaStore('files-store', () => {
     isLegacyMode,
     currentFileUnit,
     currentFileUnitUUID,
+    currentEditFileExist,
     removeUnit,
     openDir,
     openFile,

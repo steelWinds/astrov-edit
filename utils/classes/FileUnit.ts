@@ -3,6 +3,7 @@ import type { FSDataTypes } from '@/store/files-store'
 import type { IFSDataUnit } from '@/utils/classes/FSDataUnit'
 
 import async from 'async'
+import { FSDataUnit } from '@/utils/classes/FSDataUnit'
 
 type FileSourceType = 'saving' | 'uploading'
 
