@@ -2,15 +2,14 @@ import type { WriteChunk } from 'file-system-access/lib/interfaces'
 import type { IFileUnit } from '@/utils/classes/FileUnit'
 import type { IDirectoryUnit } from '@/utils/classes/DirectoryUnit'
 
-import FileUnit from '@/utils/classes/FileUnit'
-import DirectoryUnit from '@/utils/classes/DirectoryUnit'
 import { showOpenFilePicker, showSaveFilePicker, showDirectoryPicker } from 'file-system-access'
 import { v4 as uuidv4 } from 'uuid'
 import { useFileSystemAccess } from '@vueuse/core'
 import { useMimesStore } from '@/store/mimes-store'
+import async from 'async'
 
-export type DataUnit = IFileUnit | IDirectoryUnit
-export type UnitMap = Map<string, DataUnit>
+export type FSDataTypes = IFileUnit | IDirectoryUnit
+export type UnitMap = Map<string, FSDataTypes>
 
 export const useFilesStore = definePiniaStore('files-store', () => {
   const mimesStore = useMimesStore()
@@ -37,14 +36,16 @@ export const useFilesStore = definePiniaStore('files-store', () => {
     }
   }
 
-  const addUnit = async <T extends FileUnit | IDirectoryUnit>(unit: T) => {
+  const addUnit = async <T extends FSDataTypes>(unit: T) => {
     if (unit instanceof FileUnit && await unit.isSameEntry(unitsList.value)) {
-      throw new Error('It\'s same file')
+      throw new Error('File already exists')
     }
 
-    units.value.set(uuidv4(), unit)
+    const uuid = uuidv4()
 
-    return unit
+    units.value.set(uuid, unit)
+
+    return { uuid, unit }
   }
 
   const openFile = async () => {
@@ -60,9 +61,8 @@ export const useFilesStore = definePiniaStore('files-store', () => {
       ]
     })
 
-    for (const handle of fileHandles) {
-      await addUnit(markRaw(new FileUnit(handle, 'uploading')))
-    }
+    await async.forEach(fileHandles, async handle =>
+      addUnit(markRaw(new FileUnit(handle, 'uploading'))))
   }
 
   const openDir = async () => {
@@ -74,7 +74,7 @@ export const useFilesStore = definePiniaStore('files-store', () => {
 
     const dirUnit = new DirectoryUnit(dirHandle)
 
-    addUnit(markRaw(dirUnit))
+    await addUnit(markRaw(dirUnit))
   }
 
   const createFile = async (fileName: string, fileExt?: string | null) => {
@@ -93,25 +93,45 @@ export const useFilesStore = definePiniaStore('files-store', () => {
     return addUnit(markRaw(new FileUnit(fileHandle, 'saving')))
   }
 
-  const save = async (fileUnit: IFileUnit, data: WriteChunk) => {
-    await verifyPermission(fileUnit.handler)
+  const saveFile = async (targetUUID: string, data: WriteChunk) => {
+    const target = units.value.get(targetUUID)
 
-    const writable = await fileUnit.handler.createWritable()
+    if (!isFileUnit(target)) return
+
+    await verifyPermission(target.handler)
+
+    const writable = await target.handler.createWritable()
 
     await writable.write(data)
 
     await writable.close()
   }
 
-  const saveAs = async (sourceFileUnit: IFileUnit) => {
-    const fileUnit = await createFile('Untitled', null)
+  const saveFileAs = async (sourceFileUUID: string) => {
+    const target = units.value.get(sourceFileUUID)
 
-    const fileContents = await sourceFileUnit.getText(isLegacyMode.value)
+    if (!isFileUnit(target)) return
 
-    await save(fileUnit, fileContents)
+    const { uuid } = await createFile('Untitled', null)
+
+    const fileContents = await target.getText(isLegacyMode.value)
+
+    await saveFile(uuid, fileContents)
   }
 
-  const removeFile = (uuid: string) => units.value.delete(uuid)
+  const removeUnit = async (uuid: string, rootDirUUID: string = '') => {
+    const target = units.value.get(uuid)
+    const rootDir = units.value.get(rootDirUUID)
+
+    if (!target || (!target && !rootDir)) {
+      throw new Error('Target not found')
+    }
+
+    if (isFileUnit(target) && !rootDirUUID) await target.remove(isLegacyMode.value)
+    else if (isDirectoryUnit(rootDir)) await rootDir.remove(target)
+
+    units.value.delete(uuid)
+  }
 
   const clearFiles = () => units.value.clear()
 
@@ -120,12 +140,12 @@ export const useFilesStore = definePiniaStore('files-store', () => {
     isLegacyMode,
     currentFileUnit,
     currentFileUnitUUID,
+    removeUnit,
+    openDir,
     openFile,
     createFile,
-    removeFile,
     clearFiles,
-    save,
-    saveAs,
-    openDir
+    saveFile,
+    saveFileAs
   }
 })

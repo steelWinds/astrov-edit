@@ -1,42 +1,43 @@
 import type { FileSystemFileHandle } from 'file-system-access'
-import type { DataUnit } from '@/store/files-store'
+import type { FSDataTypes } from '@/store/files-store'
+import type { IFSDataUnit } from '@/utils/classes/FSDataUnit'
 
-import DirectoryUnit from '@/utils/classes/DirectoryUnit'
+import async from 'async'
 
 type FileSourceType = 'saving' | 'uploading'
 
-export interface IFileUnit {
-  handler: FileSystemFileHandle;
+export interface IFileUnit extends IFSDataUnit<FileSystemFileHandle> {
   getText: (legacy: boolean) => Promise<string>;
   getFile: (legacy: boolean) => Promise<string | File>;
+  remove: (legacy: boolean) => Promise<any>;
   isSameEntry: (
-    entries: DataUnit | DataUnit[]
+    entries: OneOr<FSDataTypes>
   ) => Promise<boolean>;
 }
 
-export default class FileUnit implements IFileUnit {
-  readonly #fileHandler: FileSystemFileHandle
+export const isFileUnit = (v: any): v is IFileUnit => {
+  return !v && v instanceof FileUnit
+}
+
+export class FileUnit extends FSDataUnit<FileSystemFileHandle> implements IFileUnit {
   readonly #fileSourceType: FileSourceType
 
   #fileData: string
 
   constructor (
-    fileHander: FileSystemFileHandle,
+    handler: FileSystemFileHandle,
     fileSourceType: FileSourceType
   ) {
-    this.#fileHandler = fileHander
+    super(handler)
+
     this.#fileSourceType = fileSourceType
     this.#fileData = ''
-  }
-
-  get handler () {
-    return this.#fileHandler
   }
 
   async getFile (legacy: boolean) {
     const isLegacyGetFile = legacy && this.#fileSourceType !== 'uploading'
 
-    return isLegacyGetFile ? this.#fileData! : this.#fileHandler.getFile()
+    return isLegacyGetFile ? this.#fileData! : this.handler.getFile()
   }
 
   async getText (legacy: boolean) {
@@ -45,15 +46,24 @@ export default class FileUnit implements IFileUnit {
     return typeof fileData === 'string' ? fileData : fileData.text()
   }
 
-  async isSameEntry (entries: DataUnit | DataUnit[]): Promise<boolean> {
+  // Warn! This function is exprimental, so this may throw an error for old browsers
+  async remove (legacy: boolean) {
+    if (!('remove' in this.handler) && legacy) {
+      throw new Error('Your browser does not support remove files')
+    }
+
+    return (this.handler as any).remove()
+  }
+
+  async isSameEntry (entries: OneOr<FSDataTypes>): Promise<boolean> {
     if (entries instanceof Array) {
-      return asyncSome(entries, async fu => this.isSameEntry(fu))
-    } else if (entries instanceof DirectoryUnit) {
+      return async.some(entries, this.isSameEntry)
+    } else if (isDirectoryUnit(entries)) {
       const tree = await entries.getTree()
 
       return this.isSameEntry(tree.files)
     }
 
-    return this.handler.isSameEntry((entries as IFileUnit).handler)
+    return this.handler.isSameEntry(entries.handler)
   }
 }

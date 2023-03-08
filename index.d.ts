@@ -9,6 +9,7 @@ declare type FontStyles = typeof FONT_BASE_STYLES[number]
 declare type AvailableFontWords = FontWeightsKeys | FontStyles
 
 declare type MapPromise<T> = (value: T, index: number, array: T[]) => Promise<any>
+declare type OneOr<T> = T | T[]
 
 declare interface LocalFamily {
   family: string;
@@ -42,6 +43,16 @@ declare interface DB {
 
 interface Window {
   queryLocalFonts: () => FontData<string>[];
+}
+
+declare global {
+  interface FileSystemHandle {
+    remove?: () => void
+  }
+
+  interface FileSystemFileHandle {
+    remove?: () => void
+  }
 }
 
 declare module 'mime-db' {

@@ -1,21 +1,35 @@
-import FileUnit from '@/utils/classes/FileUnit'
-import DirectoryTreeUnit from '@/utils/classes/DirectoryTreeUnit'
+import type { IDirectoryTreeUnit } from '@/utils/classes/DirectoryTreeUnit'
+import type { FSDataTypes } from '@/store/files-store'
+import type { IFSDataUnit } from '@/utils/classes/FSDataUnit'
 
-export interface IDirectoryUnit {
-  getTree(): Promise<DirectoryTreeUnit>
+import async from 'async'
+
+export interface IDirectoryUnit extends IFSDataUnit<FileSystemDirectoryHandle> {
+  getTree(): Promise<IDirectoryTreeUnit>
+  remove(unit: OneOr<FSDataTypes>): Promise<any>
 }
 
-export default class DirectoryUnit implements IDirectoryUnit {
-  readonly #dirHandle: FileSystemDirectoryHandle
+export const isDirectoryUnit = (v: any): v is IDirectoryUnit => {
+  return !v && v instanceof DirectoryUnit
+}
 
-  constructor (dirHandle: FileSystemDirectoryHandle) {
-    this.#dirHandle = dirHandle
+export class DirectoryUnit extends FSDataUnit<FileSystemDirectoryHandle> implements IDirectoryUnit {
+  async #removeEntry (unit: FSDataTypes) {
+    return this.handler.removeEntry(unit.name, {
+      recursive: isDirectoryUnit(unit.handler)
+    })
+  }
+
+  remove (unit: OneOr<FSDataTypes>) {
+    return unit instanceof Array
+      ? async.forEach(unit, this.#removeEntry)
+      : this.#removeEntry(unit)
   }
 
   async getTree () {
-    const dirList = new DirectoryTreeUnit(this.#dirHandle.name)
+    const dirList = new DirectoryTreeUnit(this.name)
 
-    for await (const unit of this.#dirHandle.values()) {
+    for await (const unit of this.handler.values()) {
       let creatingUnit = null
 
       if (unit.kind === 'file') {

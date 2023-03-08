@@ -9,7 +9,7 @@ export interface IDirectoryTreeUnit {
   addNested(unit: IDirectoryTreeUnit): void;
 }
 
-export default class DirectoryTreeUnit implements IDirectoryTreeUnit {
+export class DirectoryTreeUnit implements IDirectoryTreeUnit {
   readonly #files: IFileUnit[] = []
   readonly #nested: IDirectoryTreeUnit[] = []
 
