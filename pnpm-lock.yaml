@@ -40,7 +40,7 @@ specifiers:
   lodash-es: ^4.17.21
   mime-db: ^1.52.0
   nuxt: ^3.2.3
-  nuxt-vitest: ^0.6.7
+  nuxt-vitest: ^0.6.8
   pinia: ^2.0.33
   pinia-plugin-persistedstate: ^3.1.0
   postcss: ^8.4.21
@@ -98,7 +98,7 @@ devDependencies:
   eslint-plugin-vue: 9.9.0_eslint@8.35.0
   happy-dom: 8.9.0
   nuxt: 3.2.3_ijdtcl6k6tlqhudjwujn2lc7q4
-  nuxt-vitest: 0.6.7_xlr7xk5mbhh33g6eyhssy67ycu
+  nuxt-vitest: 0.6.8_xlr7xk5mbhh33g6eyhssy67ycu
   postcss: 8.4.21
   postcss-lab-function: 5.1.0_postcss@8.4.21
   postcss-nesting: 11.2.1_postcss@8.4.21
@@ -7560,8 +7560,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /nuxt-vitest/0.6.7_xlr7xk5mbhh33g6eyhssy67ycu:
-    resolution: {integrity: sha512-qvGQt1lywwD1r4CNYqxO2UOvFrnK+qHcgk3eUyLL8Wx7ux6O2tKmAD8JOuFVl8xU/ZePtzKmwSg6RgBDWZwLrw==}
+  /nuxt-vitest/0.6.8_xlr7xk5mbhh33g6eyhssy67ycu:
+    resolution: {integrity: sha512-81vLOXzmUXYHTIOPS2XQZer4pROg1CqwVN/Ki5KiU+gL9WiklT/TVsZgyzjCF8XDoU6nCL2dNZaQH1txSUkMPQ==}
     peerDependencies:
       vite: '*'
     dependencies:
@@ -7572,7 +7572,7 @@ packages:
       std-env: 3.3.2
       vite: 4.1.4
       vitest: 0.29.2_oscpa7jhv6f2pwrg7t4qxe6ngi
-      vitest-environment-nuxt: 0.6.7_ttvlqximrzzzs3anwaudazhqrm
+      vitest-environment-nuxt: 0.6.8_ttvlqximrzzzs3anwaudazhqrm
     transitivePeerDependencies:
       - '@edge-runtime/vm'
       - '@vitest/browser'
@@ -10230,8 +10230,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitest-environment-nuxt/0.6.7_ttvlqximrzzzs3anwaudazhqrm:
-    resolution: {integrity: sha512-a0b0joXsaq2n5ijKHaikKs0KHOJ1f8z1D5h9hjp2he7QasNyNpoNv42m5MPeMAGUaRVouxt3uJ5HSPc7luDV1A==}
+  /vitest-environment-nuxt/0.6.8_ttvlqximrzzzs3anwaudazhqrm:
+    resolution: {integrity: sha512-mNtTsUNTpPZc8QeutMLpXBBHFGrh7k6sIWtTNAuY9pG9i61ommSq5p1QlbwbWrHJSJ7ubgrLIljWueMNusPn3Q==}
     peerDependencies:
       vitest: ^0.24.5 || ^0.26.0 || ^0.27.0 || ^0.28.0 || ^0.29.0
       vue: ^3.2.45
