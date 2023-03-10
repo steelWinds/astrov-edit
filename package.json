@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@csstools/postcss-cascade-layers": "^3.0.1",
-    "@nuxtjs/google-fonts": "3.0.0-1",
+    "@nuxtjs/google-fonts": "3.0.0",
     "@pinia/nuxt": "^0.4.7",
     "@typescript-eslint/parser": "^5.54.1",
     "@vueuse/components": "^9.13.0",
