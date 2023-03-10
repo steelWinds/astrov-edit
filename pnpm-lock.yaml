@@ -7,7 +7,7 @@ specifiers:
   '@nuxt/eslint-config': ^0.1.1
   '@nuxt/test-utils': ^3.2.3
   '@nuxtjs/eslint-config-typescript': ^12.0.0
-  '@nuxtjs/google-fonts': 3.0.0-1
+  '@nuxtjs/google-fonts': 3.0.0
   '@pinia-plugin-persistedstate/nuxt': ^1.0.0
   '@pinia/nuxt': ^0.4.7
   '@pinia/testing': ^0.0.15
@@ -54,7 +54,7 @@ specifiers:
 
 dependencies:
   '@csstools/postcss-cascade-layers': 3.0.1_postcss@8.4.21
-  '@nuxtjs/google-fonts': 3.0.0-1_rollup@2.79.1
+  '@nuxtjs/google-fonts': 3.0.0_rollup@2.79.1
   '@pinia/nuxt': 0.4.7_y5kq6jnxhjpfaycoauy6u2ffhq
   '@typescript-eslint/parser': 5.54.1_ycpbpc6yetojsgtrx3mwntkhsu
   '@vueuse/components': 9.13.0_vue@3.2.47
@@ -2755,12 +2755,12 @@ packages:
       - supports-color
     dev: true
 
-  /@nuxtjs/google-fonts/3.0.0-1_rollup@2.79.1:
-    resolution: {integrity: sha512-eSFvAAMU1e2lxHn6Os41vVz8ngyPURAiYjpVMpmIv5ZqvQ3kn+YfPAglXQ0PfOVKunbLdj1prcnv+Pk5jG0Sbg==}
+  /@nuxtjs/google-fonts/3.0.0_rollup@2.79.1:
+    resolution: {integrity: sha512-knP2CJFkMHGQ9pepVNwquXvqiIHDma/6yZNXiYk7WWatRbbQUPf2423vXiBYu267Mff2KMuDLoAJ1Dsv2ymhdQ==}
     dependencies:
       '@nuxt/kit': 3.2.3_rollup@2.79.1
       google-fonts-helper: 3.2.4
-      pathe: 0.3.9
+      pathe: 1.1.0
     transitivePeerDependencies:
       - rollup
       - supports-color
@@ -7908,10 +7908,6 @@ packages:
   /path-type/4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
     engines: {node: '>=8'}
-
-  /pathe/0.3.9:
-    resolution: {integrity: sha512-6Y6s0vT112P3jD8dGfuS6r+lpa0qqNrLyHPOwvXMnyNTQaYiwgau2DP3aNDsR13xqtGj7rrPo+jFUATpU6/s+g==}
-    dev: false
 
   /pathe/1.1.0:
     resolution: {integrity: sha512-ODbEPR0KKHqECXW1GoxdDb+AZvULmXjVPy4rt+pGo2+TnjJTIPJQSVS6N63n8T2Ip+syHhbn52OewKicV0373w==}
